@@ -1,40 +1,0 @@
-
--------------------------------------------------------------------------------
-   ROBOCOPY     ::     Robust File Copy for Windows                              
--------------------------------------------------------------------------------
-
-  Started : Tue May 26 21:28:53 2015
-
-   Source : C:\GIT\mlwd\Ditto.Resolvers\Ditto.Resolvers.Sample\bin\
-     Dest : C:\GIT\mlwd\Ditto.Resolvers\Ditto.Resolvers.Sample\App_Data\NuGetBackup\20150526-212852\bin\
-
-    Files : *.*
-	    
-  Options : *.* /S /E /COPY:DAT /R:1000000 /W:30 
-
-------------------------------------------------------------------------------
-
-	                   9	C:\GIT\mlwd\Ditto.Resolvers\Ditto.Resolvers.Sample\bin\
-	    New File  		   45416	Microsoft.Web.Infrastructure.dll  0%  100%  
-	    New File  		   23640	Microsoft.Web.Mvc.FixedDisplayModes.dll  0%  100%  
-	    New File  		  391680	Newtonsoft.Json.dll  0%   33%   66%  100%  
-	    New File  		  138352	System.Web.Helpers.dll  0%   94%  100%  
-	    New File  		  506976	System.Web.Mvc.dll  0%   25%   51%   77%  100%  
-	    New File  		  266888	System.Web.Razor.dll  0%   49%   98%  100%  
-	    New File  		   41048	System.Web.WebPages.Deployment.dll  0%  100%  
-	    New File  		  204400	System.Web.WebPages.dll  0%   64%  100%  
-	    New File  		   39536	System.Web.WebPages.Razor.dll  0%  100%  
-
-------------------------------------------------------------------------------
-
-               Total    Copied   Skipped  Mismatch    FAILED    Extras
-    Dirs :         1         0         1         0         0         0
-   Files :         9         9         0         0         0         0
-   Bytes :    1.58 m    1.58 m         0         0         0         0
-   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
-
-
-   Speed :            55264533 Bytes/sec.
-   Speed :            3162.261 MegaBytes/min.
-
-   Ended : Tue May 26 21:28:53 2015
