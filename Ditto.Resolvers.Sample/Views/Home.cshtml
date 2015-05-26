@@ -1,0 +1,20 @@
+﻿@using Ditto.Resolvers.Sample.Models.Archetypes
+@inherits Umbraco.Web.Mvc.UmbracoViewPage<Ditto.Resolvers.Sample.Models.ViewModel<Ditto.Resolvers.Sample.Models.DocTypes.Home>>
+@{
+    ViewBag.PageTitle = "Home";
+
+    Layout = "~/Views/Shared/Layouts/Root.cshtml";
+
+    var priceList = Model.Content.PriceList ?? new List<PriceList>();
+}
+
+<h2>@Model.Content.Title</h2>
+@Html.Raw(Model.Content.Body)
+<ul>
+    @foreach (var item in priceList)
+    {
+        var url = item.AssociatedPage != null ? item.AssociatedPage.Url : "javascript:void(0);";
+
+        <li>@item.Quantity x @item.Title = @item.Price | <a href="@url">View</a></li>
+    }
+</ul>

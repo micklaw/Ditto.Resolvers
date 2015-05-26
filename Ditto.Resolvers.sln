@@ -9,6 +9,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Git", "Git", "{02BF6D06-140
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{0445B3C6-7F80-44F0-B878-6760F99674B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditto.Resolvers.Sample", "Ditto.Resolvers.Sample\Ditto.Resolvers.Sample.csproj", "{B62C802F-09DE-4A10-98A9-23A5DD70A75B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,8 +23,15 @@ Global
 		{A2DD3A98-C800-4AEF-9176-B6FC58003B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2DD3A98-C800-4AEF-9176-B6FC58003B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2DD3A98-C800-4AEF-9176-B6FC58003B33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B62C802F-09DE-4A10-98A9-23A5DD70A75B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B62C802F-09DE-4A10-98A9-23A5DD70A75B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B62C802F-09DE-4A10-98A9-23A5DD70A75B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B62C802F-09DE-4A10-98A9-23A5DD70A75B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B62C802F-09DE-4A10-98A9-23A5DD70A75B} = {0445B3C6-7F80-44F0-B878-6760F99674B0}
 	EndGlobalSection
 EndGlobal
