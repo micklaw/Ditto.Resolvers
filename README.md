@@ -1,4 +1,7 @@
 # Ditto.Resolvers
+
+[![Build status](https://ci.appveyor.com/api/projects/status/8hwtv62nmrqlbtm3?svg=true)](https://ci.appveyor.com/project/MichaelLaw/ditto-resolvers)
+
 Ditto is awesome, we all know that, though it would be nice if we could hook third parties like Archetype and The Grid to the Ditto flow. This wee chunk of code is aiming to achieve just that.
 
 Currently this only has support for Archetypes, but hopefully over the next couple of weeks we can add to that.
