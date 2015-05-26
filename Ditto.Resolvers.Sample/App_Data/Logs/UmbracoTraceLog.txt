@@ -1849,3 +1849,27 @@ System.Web.HttpCompileException (0x80004005): c:\GIT\mlwd\Ditto.Resolvers\Ditto.
 2015-05-26 22:36:45,156 [28] INFO  umbraco.content - [Thread 16] Save Xml to file...
 2015-05-26 22:37:02,286 [28] INFO  Umbraco.Core.Publishing.PublishingStrategy - [Thread 52] Content 'Home' with Id '1056' has been published.
 2015-05-26 22:37:06,321 [28] INFO  umbraco.content - [Thread 45] Save Xml to file...
+2015-05-26 22:49:36,490 [28] INFO  Umbraco.Web.Scheduling.BackgroundTaskRunner`1[[Umbraco.Web.Scheduling.IBackgroundTask, umbraco, Version=1.0.5610.18898, Culture=neutral, PublicKeyToken=null]] - [Thread 33] Down, tasks completed.
+2015-05-26 22:49:36,503 [28] INFO  Umbraco.Web.Scheduling.BackgroundTaskRunner`1[[Umbraco.Web.Scheduling.IBackgroundTask, umbraco, Version=1.0.5610.18898, Culture=neutral, PublicKeyToken=null]] - [Thread 33] Down, tasks completed.
+2015-05-26 22:49:36,503 [28] INFO  Umbraco.Web.Scheduling.BackgroundTaskRunner`1[[Umbraco.Web.Scheduling.IBackgroundTask, umbraco, Version=1.0.5610.18898, Culture=neutral, PublicKeyToken=null]] - [Thread 33] Down, tasks completed.
+2015-05-26 22:49:36,504 [28] INFO  Umbraco.Web.Scheduling.BackgroundTaskRunner`1[[Umbraco.Web.PublishedCache.XmlPublishedCache.XmlCacheFilePersister, umbraco, Version=1.0.5610.18898, Culture=neutral, PublicKeyToken=null]] - [Thread 45] Down, tasks completed.
+2015-05-26 22:49:36,606 [28] INFO  Umbraco.Core.UmbracoApplicationBase - [Thread 33] Application shutdown. Reason: BinDirChangeOrDirectoryRename
+2015-05-26 22:50:07,988 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Determining hash of code files on disk
+2015-05-26 22:50:07,997 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Hash determined (took 5ms)
+2015-05-26 22:50:08,004 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Starting resolution types of umbraco.interfaces.IApplicationStartupHandler
+2015-05-26 22:50:08,215 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Completed resolution of types of umbraco.interfaces.IApplicationStartupHandler, found 38 (took 210ms)
+2015-05-26 22:50:08,275 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Starting resolution types of Umbraco.Core.PropertyEditors.IPropertyEditorValueConverter
+2015-05-26 22:50:08,279 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Completed resolution of types of Umbraco.Core.PropertyEditors.IPropertyEditorValueConverter, found 0 (took 3ms)
+2015-05-26 22:50:08,279 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Starting resolution types of Umbraco.Core.PropertyEditors.IPropertyValueConverter
+2015-05-26 22:50:08,283 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Completed resolution of types of Umbraco.Core.PropertyEditors.IPropertyValueConverter, found 17 (took 3ms)
+2015-05-26 22:50:08,296 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Starting resolution types of Umbraco.Web.Mvc.SurfaceController
+2015-05-26 22:50:08,299 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Completed resolution of types of Umbraco.Web.Mvc.SurfaceController, found 4 (took 3ms)
+2015-05-26 22:50:08,300 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Starting resolution types of Umbraco.Web.WebApi.UmbracoApiController
+2015-05-26 22:50:08,304 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Completed resolution of types of Umbraco.Web.WebApi.UmbracoApiController, found 36 (took 3ms)
+2015-05-26 22:50:08,332 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Starting resolution types of Umbraco.Core.Media.IThumbnailProvider
+2015-05-26 22:50:08,335 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Completed resolution of types of Umbraco.Core.Media.IThumbnailProvider, found 3 (took 3ms)
+2015-05-26 22:50:08,336 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Starting resolution types of Umbraco.Core.Media.IImageUrlProvider
+2015-05-26 22:50:08,339 [14] INFO  Umbraco.Core.PluginManager - [Thread 25] Completed resolution of types of Umbraco.Core.Media.IImageUrlProvider, found 1 (took 3ms)
+2015-05-26 22:50:09,112 [14] INFO  Umbraco.Web.Search.ExamineEvents - [Thread 25] Initializing Examine and binding to business logic events
+2015-05-26 22:50:09,224 [14] INFO  Umbraco.Web.Search.ExamineEvents - [Thread 25] Adding examine event handlers for index providers: 3
+2015-05-26 22:50:09,271 [14] INFO  Umbraco.Web.UmbracoModule - [Thread 32] Setting OriginalRequestUrl: localhost:61582/umbraco
