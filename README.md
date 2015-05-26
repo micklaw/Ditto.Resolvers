@@ -5,7 +5,9 @@ hook in to Ditto to add support for Archetypes and the Grid etc, these resolvers
 Currently this only has support for Archetypes, but soon it would be good to add other third parties 
 like Grid, Sir Trevor etc
 
-This code is hugely untested in its current form, but seems to work currently for Archetypes.
+**NOTE: This code is hugely untested in its current form and is beig used as PoC. Initial testing for Archetypes seems promising.
+It currently is hanging off the develop branch of Ditto as there were some features I could use, but does use a little reflection to get 
+there... so stay safe peeps =)**
 
 ## Archetypes
 
