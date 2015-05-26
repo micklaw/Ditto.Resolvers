@@ -12,28 +12,28 @@ This code is hugely untested in its current form, but seems to work currently fo
 Setup is easy. Just decorate your Archetype property with a **ArchetypeResolverAttribute**, optionally if 
 your property name is different to the property alias in Umbraco, then yucan define this here.
 
-'''csharp
+```csharp
 	[ArchetypeResolver("DifferentPropertyName")]
 	public List<CustomArchetype> List { get; set; }
-'''
+```
 
 The above code show how this would work for a list of the custom Archetype class **CustomArchetype** 
 in my solution. We could easy make this class a single item by not using a List at all and this would 
 resolve to a single item of this type.
 
-'''csharp
+```csharp
 	[ArchetypeResolver("DifferentPropertyName")]
 	public CustomArchetype List { get; set; }
-'''
+```
 
 If you have enabled multiple fieldsets in Archetype then this would create a generic list including all
 of the different types of Archetypes you have defined on your datatype. The only caveat being your
 property would require to look like below.
 
-'''csharp
+```csharp
 	[ArchetypeResolver("DifferentPropertyName")]
 	public List<ArchetypeFieldsetModel> List { get; set; }
-'''
+```
 
 ### Archetypes Constraints
 
