@@ -12,7 +12,7 @@ there... so stay safe peeps =)**
 ## Archetypes
 
 Setup is easy. Just decorate your Archetype property with a **ArchetypeResolverAttribute**, optionally if 
-your property name is different to the property alias in Umbraco, then yucan define this here.
+your property name is different to the property alias in Umbraco, then you can define this here.
 
 ```csharp
 	[ArchetypeResolver("DifferentPropertyName")]
@@ -36,6 +36,11 @@ property would require to look like below.
 	[ArchetypeResolver("DifferentPropertyName")]
 	public List<ArchetypeFieldsetModel> List { get; set; }
 ```
+
+
+### Nested Archetypes
+
+Rejoice. Nested Archetypes should also work so long as you have decorated the child Archetype property on your POCO with the **ArchetypeResolverAttribute**.
 
 ### Archetypes Constraints
 
