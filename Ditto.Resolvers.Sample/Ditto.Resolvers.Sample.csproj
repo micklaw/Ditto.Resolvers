@@ -115,6 +115,14 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Our.Umbraco.Ditto.0.7.0\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
     </Reference>
+    <Reference Include="Our.Umbraco.Ditto.Resolvers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.1.0-alpha-000036\lib\net45\Our.Umbraco.Ditto.Resolvers.dll</HintPath>
+    </Reference>
+    <Reference Include="Our.Umbraco.Ditto.Resolvers.Archetype, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.1.0-alpha-000036\lib\net45\Our.Umbraco.Ditto.Resolvers.Archetype.dll</HintPath>
+    </Reference>
     <Reference Include="SQLCE4Umbraco">
       <HintPath>..\packages\UmbracoCms.Core.7.2.5\lib\SQLCE4Umbraco.dll</HintPath>
     </Reference>
@@ -355,16 +363,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\404handlers.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers.Archetype\Our.Umbraco.Ditto.Resolvers.Archetype.csproj">
-      <Project>{3B3839A7-8388-436A-92BC-E8A0B3488D7E}</Project>
-      <Name>Our.Umbraco.Ditto.Resolvers.Archetype</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.csproj">
-      <Project>{a2dd3a98-c800-4aef-9176-b6fc58003b33}</Project>
-      <Name>Our.Umbraco.Ditto.Resolvers</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Shared\Layouts\Root.cshtml" />
