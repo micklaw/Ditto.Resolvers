@@ -19,7 +19,7 @@
 	<Release>true</Release>
     <PackageName>Ditto.Resolvers.Archetype</PackageName>
     <MinUmbracoVersion>7.1.4</MinUmbracoVersion>
-    <Readme>Add Archetype strong types to your Ditto POCOs</Readme>
+    <Readme>Start using stringly types Archetype Models in your Ditto POCOs</Readme>
     <AuthorName>Michael Law</AuthorName>
     <AuthorUrl>https://github.com/micklaw/Ditto.Resolvers/graphs/contributors</AuthorUrl>
     <PackageLicenseName>MIT license</PackageLicenseName>
