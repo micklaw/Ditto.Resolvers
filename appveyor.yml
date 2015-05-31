@@ -11,7 +11,8 @@ build_script:
 
 artifacts:
   - path: artifacts\*.nupkg
-  - name: nuget
+    name: nuget
+
 deploy:
 
      # NuGet Deployment for releases
