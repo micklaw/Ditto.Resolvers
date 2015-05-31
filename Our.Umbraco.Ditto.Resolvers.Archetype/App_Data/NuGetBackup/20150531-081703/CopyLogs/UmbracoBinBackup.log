@@ -1,0 +1,29 @@
+
+-------------------------------------------------------------------------------
+   ROBOCOPY     ::     Robust File Copy for Windows                              
+-------------------------------------------------------------------------------
+
+  Started : Sun May 31 08:17:04 2015
+
+   Source : C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Archetype\bin\
+     Dest : C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Archetype\App_Data\NuGetBackup\20150531-081703\bin\
+
+    Files : *.*
+	    
+  Options : *.* /S /E /COPY:DAT /R:1000000 /W:30 
+
+------------------------------------------------------------------------------
+
+	                   0	C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Archetype\bin\
+	  New Dir          0	C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Archetype\bin\Debug\
+	  New Dir          0	C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Archetype\bin\Release\
+
+------------------------------------------------------------------------------
+
+               Total    Copied   Skipped  Mismatch    FAILED    Extras
+    Dirs :         3         2         1         0         0         0
+   Files :         0         0         0         0         0         0
+   Bytes :         0         0         0         0         0         0
+   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
+
+   Ended : Sun May 31 08:17:04 2015

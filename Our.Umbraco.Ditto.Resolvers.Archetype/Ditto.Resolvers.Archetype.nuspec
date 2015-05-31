@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Ditto.Resolvers.Archetype</id>
+    <version>$version$</version>
+    <title>Yomego.CMS</title>
+    <authors>Yomego</authors>
+    <owners>Yomego</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Yomego loves Umbraco, but not so much the way the whole thing kind of ignores how Mvc works. We have built this framework for our own use, but if you fancy using it, give it a whirl.</description>
+    <copyright>Copyright 2014</copyright>
+    <tags>yomego,umbraco,cms,dotnet,mvc,aspnet</tags>
+    <dependencies>
+      <dependency id="Archetype" version="1.6.0" />
+      <dependency id="Humanizer" version="1.32.0" />
+      <dependency id="ImageProcessor" version="2.1.0.0" />
+      <dependency id="ImageProcessor.Web" version="4.1.4.0" />
+      <dependency id="ImageProcessor.Web.Config" version="2.1.0.0" />
+      <dependency id="Microsoft.AspNet.Mvc" version="4.0.40804.0"  />
+      <dependency id="Microsoft.AspNet.Razor" version="2.0.20710.0" />
+      <dependency id="Microsoft.AspNet.WebPages" version="2.0.20710.0" />
+      <dependency id="Microsoft.Web.Infrastructure" version="1.0.0.0" />
+      <dependency id="Newtonsoft.Json" version="6.0.6" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Install.ps1" target="tools" />
+    <file src="readme.txt" />
+    <file src="bin\Yomego.CMS.dll" target="lib\net45" />
+    <file src="bin\Yomego.CMS.Core.dll" target="lib\net45" />
+    <file src="config\uSyncSettings.config" target="content\config\uSyncSettings.config" />
+    <file src="content\js\utils.js" target="content\content\js\utils.js" />
+    <file src="App_Plugins\YomegoAdmin\backoffice\YomegoAdminTree\edit.html" target="content\App_Plugins\YomegoAdmin\backoffice\YomegoAdminTree\edit.html" />
+  </files>
+</package>

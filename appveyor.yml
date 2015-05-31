@@ -1,0 +1,25 @@
+# version format
+version: 0.1.0.{build}
+
+# PACKAGE_PRERELEASE_SUFFIX if a rtm release build this should be blank, otherwise if empty will default to alpha
+# example PACKAGE_PRERELEASE_SUFFIX=beta
+init:
+  - set PACKAGE_PRERELEASE_SUFFIX=
+
+build_script:
+- build-appveyor.cmd
+
+artifacts:
+  - path: artifacts\*.nupkg
+
+deploy:
+
+     # NuGet Deployment for releases
+  - provider: NuGet
+    server: 
+    api_key:
+      secure: fK6HViQb+42cziwzfw5OrwJG3LC6gl+NDLicTi2az4XwL6O0wqrdmDL7zmsB1787
+    artifact: /.*\.nupkg/
+    on:
+      branch: master
+      appveyor_repo_tag: true
