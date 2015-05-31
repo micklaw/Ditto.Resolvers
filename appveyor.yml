@@ -1,6 +1,5 @@
 version: 0.1.0.{build}
 
-skip_tags: true
 init:
   - set PACKAGE_PRERELEASE_SUFFIX=
 
