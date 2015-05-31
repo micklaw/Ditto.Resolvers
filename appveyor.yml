@@ -20,3 +20,4 @@ deploy:
     artifact: nuget
     on:
       branch: master
+      appveyor_repo_tag: true
