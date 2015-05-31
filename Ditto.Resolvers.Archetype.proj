@@ -115,8 +115,7 @@
   <!-- PREPARE FILES -->
   <Target Name="PrepareFiles" DependsOnTargets="Compile">
     <ItemGroup>
-      <BinFiles Include="$(ProjectDir)\bin\$(BuildConfig)\Our.Umbraco.Ditto.Resolvers.Archetype.dll" />
-	  <BinFiles Include="$(ProjectDir)\bin\$(BuildConfig)\Our.Umbraco.Ditto.Resolvers.dll" />
+      <BinFiles Include="$(ProjectDir)\bin\$(BuildConfig)\Our.Umbraco.Ditto.Resolvers*.dll" />
       <SrcFiles Include="$(ProjectDir)\**\*.cs" Exclude="$(ProjectDir)\obj\**"/>
       <PackageFile Include="$(MSBuildProjectDirectory)\package.xml" />
       <NuSpecFile Include="$(MSBuildProjectDirectory)\package.nuspec" />
