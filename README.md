@@ -6,8 +6,6 @@ Ditto is awesome, we all know that, though it would be nice if we could hook thi
 
 Currently this only has support for Archetypes, but hopefully over the next couple of weeks we can add to that.
 
-**DISCLAIMER: This code runs of the 'develop' branch of Ditto, hence the reason this project doesnt reference the nuget package. This will change when the Ditto 'develop' branch is merged in to 'master' for release =)**
-
 ## Archetypes
 
 Setup is easy. Below is a Ditto class which maps to my Home document type, this document type has an Archetype property called PriceList (alias: priceList).
