@@ -11,7 +11,7 @@ build_script:
 
 artifacts:
   - path: artifacts\*.nupkg
-
+  - name: nuget
 deploy:
 
      # NuGet Deployment for releases
@@ -19,6 +19,6 @@ deploy:
     server: 
     api_key:
       secure: fK6HViQb+42cziwzfw5OrwJG3LC6gl+NDLicTi2az4XwL6O0wqrdmDL7zmsB1787
-    artifact: /.*\.nupkg/
+    artifact: nuget
     on:
       branch: master
