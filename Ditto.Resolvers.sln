@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.Ditto.Resolvers", "Our.Umbraco.Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.csproj", "{A2DD3A98-C800-4AEF-9176-B6FC58003B33}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{02BF6D06-1405-413E-8335-F1DF5C890E37}"
@@ -20,6 +20,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ditto.Resolvers.Sample", "D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.Ditto.Resolvers.Archetype", "Our.Umbraco.Ditto.Resolvers.Archetype\Our.Umbraco.Ditto.Resolvers.Archetype.csproj", "{3B3839A7-8388-436A-92BC-E8A0B3488D7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.Ditto.Resolvers.Grid", "Our.Umbraco.Ditto.Resolvers.Grid\Our.Umbraco.Ditto.Resolvers.Grid.csproj", "{A70ABE09-DF5C-4912-BE79-E1715FF5F53A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A2DD3A98-C800-4AEF-9176-B6FC58003B33} = {A2DD3A98-C800-4AEF-9176-B6FC58003B33}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +43,10 @@ Global
 		{3B3839A7-8388-436A-92BC-E8A0B3488D7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B3839A7-8388-436A-92BC-E8A0B3488D7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B3839A7-8388-436A-92BC-E8A0B3488D7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A70ABE09-DF5C-4912-BE79-E1715FF5F53A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A70ABE09-DF5C-4912-BE79-E1715FF5F53A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A70ABE09-DF5C-4912-BE79-E1715FF5F53A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A70ABE09-DF5C-4912-BE79-E1715FF5F53A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
