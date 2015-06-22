@@ -21,6 +21,6 @@ namespace Ditto.Resolvers.Sample.Models.DocTypes
         public HtmlString Body { get; set; }
 
         [ArchetypeResolver]
-        public virtual List<PriceList> PriceList { get; set; }
+        public List<PriceList> PriceList { get; set; }
     }
 }

@@ -16,7 +16,7 @@
     <AssemblyName>Ditto.Resolvers.Sample</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -115,13 +115,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Our.Umbraco.Ditto.0.7.0\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
     </Reference>
-    <Reference Include="Our.Umbraco.Ditto.Resolvers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.1.0-alpha-000036\lib\net45\Our.Umbraco.Ditto.Resolvers.dll</HintPath>
-    </Reference>
-    <Reference Include="Our.Umbraco.Ditto.Resolvers.Archetype, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Ditto.Resolvers.Archetype.0.1.0-alpha-000036\lib\net45\Our.Umbraco.Ditto.Resolvers.Archetype.dll</HintPath>
+    <Reference Include="Our.Umbraco.DocTypeGridEditor">
+      <HintPath>..\Dependencies\Our.Umbraco.DocTypeGridEditor.dll</HintPath>
     </Reference>
     <Reference Include="SQLCE4Umbraco">
       <HintPath>..\packages\UmbracoCms.Core.7.2.5\lib\SQLCE4Umbraco.dll</HintPath>
@@ -158,6 +153,7 @@
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.30506.0\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -235,7 +231,9 @@
     </Compile>
     <Compile Include="Models\Archetypes\PriceList.cs" />
     <Compile Include="Models\DocTypes\Base\Content.cs" />
+    <Compile Include="Models\DocTypes\Base\Grid.cs" />
     <Compile Include="Models\DocTypes\Base\Page.cs" />
+    <Compile Include="Models\DocTypes\Grid\GridTitle.cs" />
     <Compile Include="Models\DocTypes\TextPage.cs" />
     <Compile Include="Models\DocTypes\Home.cs" />
     <Compile Include="Models\ViewModel.cs" />
@@ -271,10 +269,18 @@
     <Content Include="App_Plugins\Archetype\views\archetype.config.html" />
     <Content Include="App_Plugins\Archetype\views\archetype.default.html" />
     <Content Include="App_Plugins\Archetype\views\archetype.html" />
+    <Content Include="App_Plugins\DocTypeGridEditor\Config\grid.editors.config.js" />
+    <Content Include="App_Plugins\DocTypeGridEditor\Js\doctypegrideditor.controllers.js" />
+    <Content Include="App_Plugins\DocTypeGridEditor\Js\doctypegrideditor.resources.js" />
+    <Content Include="App_Plugins\DocTypeGridEditor\Js\doctypegrideditor.services.js" />
+    <Content Include="App_Plugins\DocTypeGridEditor\Views\doctypegrideditor.dialog.html" />
+    <Content Include="App_Plugins\DocTypeGridEditor\Views\doctypegrideditor.html" />
     <Content Include="Config\grid.editors.config.js" />
     <Content Include="default.aspx" />
     <Content Include="Global.asax" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -370,6 +376,28 @@
   <ItemGroup>
     <Content Include="Views\Home.cshtml" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers.Archetype\Our.Umbraco.Ditto.Resolvers.Archetype.csproj">
+      <Project>{3b3839a7-8388-436a-92bc-e8a0b3488d7e}</Project>
+      <Name>Our.Umbraco.Ditto.Resolvers.Archetype</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers.Grid\Our.Umbraco.Ditto.Resolvers.Grid.csproj">
+      <Project>{03dd3d84-9117-4c1d-9aa1-f0e028ebe387}</Project>
+      <Name>Our.Umbraco.Ditto.Resolvers.Grid</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.csproj">
+      <Project>{a2dd3a98-c800-4aef-9176-b6fc58003b33}</Project>
+      <Name>Our.Umbraco.Ditto.Resolvers</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Plugins\DocTypeGridEditor\package.manifest" />
+    <Content Include="App_Plugins\DocTypeGridEditor\Render\DocTypeGridEditor.cshtml" />
+    <Content Include="App_Plugins\DocTypeGridEditor\Render\DocTypeGridEditorPreviewer.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Partials\GridTitle.cshtml" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -386,9 +414,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerPort>10799</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:61582/</IISUrl>
+          <IISUrl>http://local.resolvers</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

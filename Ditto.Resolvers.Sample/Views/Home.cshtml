@@ -11,10 +11,12 @@
 <h2>@Model.Content.Title</h2>
 @Html.Raw(Model.Content.Body)
 <ul>
-    @foreach (var item in priceList)
+    @foreach (var item in priceList.Where(i => !i.Disabled))
     {
         var url = item.AssociatedPage != null ? item.AssociatedPage.Url : "javascript:void(0);";
 
         <li>@item.Quantity x @item.Title = @item.Price | <a href="@url">View</a></li>
     }
 </ul>
+
+

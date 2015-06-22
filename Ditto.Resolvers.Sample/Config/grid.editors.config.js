@@ -42,5 +42,19 @@
 	        "style": "border-left: 3px solid #ccc; padding: 10px; color: #ccc; font-family: serif; font-variant: italic; font-size: 18px",
 	        "markup": "<blockquote>#value#</blockquote>"
 	    }
-	}
+	},
+    {
+        "name": "Doc Type",
+        "alias": "docType",
+        "view": "/App_Plugins/DocTypeGridEditor/Views/doctypegrideditor.html",
+        "render": "/App_Plugins/DocTypeGridEditor/Render/DocTypeGridEditor.cshtml",
+        "icon": "icon-item-arrangement",
+        "config": {
+            "allowedDocTypes": [
+                  "GridTitle"
+            ],
+            "enablePreview": true,
+            "viewPath": "/Views/Partials/"
+        }
+    }
 ]
