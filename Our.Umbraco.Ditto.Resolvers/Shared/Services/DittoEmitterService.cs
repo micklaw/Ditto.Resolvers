@@ -25,9 +25,9 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
             // [ML] - Proxy the class
 
             var proxyNamespace = new AssemblyName(this.GetType().Namespace + ".Proxied");
-            var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(proxyNamespace, AssemblyBuilderAccess.Run);
+            var assembly = AppDomain.CurrentDomain.DefineDynamicAssembly(proxyNamespace, AssemblyBuilderAccess.RunAndSave);
             var module = assembly.DefineDynamicModule(proxyNamespace.Name);
-            var proxyType = module.DefineType(type.Name + "Proxy", TypeAttributes.Public, type);
+            var proxyType = module.DefineType(type.Name + "Proxy", TypeAttributes.Public | TypeAttributes.BeforeFieldInit, type);
 
             // [ML] - Override the virtual converted value
 
@@ -36,6 +36,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
             if (oldProp != null && oldProp.GetGetMethod().IsVirtual)
             {
                 var newProp = proxyType.DefineProperty(oldProp.Name, oldProp.Attributes, oldProp.PropertyType, null);
+                var backingField = proxyType.DefineField(string.Format("<{0}>k__BackingField", propertyName), oldProp.PropertyType, FieldAttributes.Private);
 
                 // [ML] - Add the custom attribute
                 if (attribute != null)
@@ -44,7 +45,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
 
                     if (ctor != null)
                     {
-                        newProp.SetCustomAttribute(new CustomAttributeBuilder(ctor , constructorValues, new FieldInfo[0], new object[0]));
+                        newProp.SetCustomAttribute(new CustomAttributeBuilder(ctor, constructorValues, new FieldInfo[0], new object[0]));
                     }
                 }
 
@@ -52,15 +53,16 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
 
                 var attributes = MethodAttributes.Virtual | MethodAttributes.Public | MethodAttributes.SpecialName | MethodAttributes.HideBySig;
 
-                var pGet = proxyType.DefineMethod("get_" + oldProp.Name, attributes, oldProp.PropertyType,Type.EmptyTypes);
+                var pGet = proxyType.DefineMethod("get_" + oldProp.Name, attributes, oldProp.PropertyType, Type.EmptyTypes);
                 var pSet = proxyType.DefineMethod("set_" + oldProp.Name, attributes, null, new[] {oldProp.PropertyType});
 
                 // [ML] - Give the getter a method body
 
                 ILGenerator pILGet = pGet.GetILGenerator();
 
+                
                 pILGet.Emit(OpCodes.Ldarg_0);
-                pILGet.Emit(OpCodes.Call, oldProp.GetGetMethod());
+                pILGet.Emit(OpCodes.Ldfld, backingField);
                 pILGet.Emit(OpCodes.Ret);
 
                 // [ML] - Give the setter a method body
@@ -69,11 +71,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
 
                 pILSet.Emit(OpCodes.Ldarg_0);
                 pILSet.Emit(OpCodes.Ldarg_1);
-                pILSet.Emit(OpCodes.Call, oldProp.GetSetMethod());
-                pILSet.Emit(OpCodes.Ldarg_0);
-                pILSet.Emit(OpCodes.Ldstr, oldProp.Name);
-
-                // [ML] - Setter and getter for new overriden property on proxy class
+                pILSet.Emit(OpCodes.Stfld, backingField);
+                pILSet.Emit(OpCodes.Ret);
 
                 newProp.SetSetMethod(pSet);
                 newProp.SetGetMethod(pGet);

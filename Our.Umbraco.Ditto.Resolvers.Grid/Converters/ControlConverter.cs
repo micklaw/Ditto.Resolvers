@@ -15,6 +15,7 @@ using Our.Umbraco.Ditto.Resolvers.Grid.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Grid.Models;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services.Abstract;
+using Umbraco.Core;
 using Umbraco.Core.Models;
 
 namespace Our.Umbraco.Ditto.Resolvers.Grid.Converters
