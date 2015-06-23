@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Ditto.Resolvers.Sample.Models.Archetypes;
 using Ditto.Resolvers.Sample.Models.DocTypes.Base;
+using Ditto.Resolvers.Sample.Models.Grid;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Grid.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Grid.Models;

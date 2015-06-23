@@ -19,7 +19,7 @@ using Umbraco.Core.Models;
 
 namespace Our.Umbraco.Ditto.Resolvers.Grid.Converters
 {
-    internal class ControlConverter : Newtonsoft.Json.Converters.CustomCreationConverter<Control>
+    internal class ControlConverter<T> : Newtonsoft.Json.Converters.CustomCreationConverter<Control> where T : Control
     {
         private EmitterService _emitter { get; set; }
         private PropertyValueService _valueService { get; set; }
@@ -42,7 +42,9 @@ namespace Our.Umbraco.Ditto.Resolvers.Grid.Converters
         {
             // [ML] - Resolve original type
 
-            var control = JsonConvert.DeserializeObject<Control>(jObject.ToString());
+            var json = jObject.ToString();
+
+            var control = JsonConvert.DeserializeObject<T>(json);
 
             // [ML] - If we have an alias (which we should, get a typeconverter and proxy the class
  
@@ -57,19 +59,17 @@ namespace Our.Umbraco.Ditto.Resolvers.Grid.Converters
 
                 // [ML] - Override the virtual propery with our own
 
-                var proxy = _emitter.OverrideProperty<Control>("ConvertedValue", attribute, ctorParams, ctorValues);
+                var proxy = _emitter.OverrideProperty<T>("ConvertedValue", attribute, ctorParams, ctorValues);
+                var proxyType = proxy.GetType();
 
-                proxy.editor = control.editor;
-                proxy.value = control.value;
-                proxy.ConvertedValue = control.ConvertedValue;
-
-                var property = proxy.GetType().GetProperty("ConvertedValue");
+                var proxyObject = JsonConvert.DeserializeObject(json, proxyType) as T;
+                var convertProperyInfo = proxyObject.GetType().GetProperty("ConvertedValue");
 
                 // [ML] - Set the value using Ditto
 
-                proxy.ConvertedValue = _valueService.Set(_content, _culture, property, proxy.value, proxy);
+                proxyObject.ConvertedValue = _valueService.Set(_content, _culture, convertProperyInfo, proxyObject.value, proxyObject);
 
-                return proxy;
+                return proxyObject;
             }
 
             return control;

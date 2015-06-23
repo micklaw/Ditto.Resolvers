@@ -10,7 +10,7 @@ using Umbraco.Core.PropertyEditors.ValueConverters;
 
 namespace Our.Umbraco.Ditto.Resolvers.Grid.Resolvers
 {
-    public class GridValueResolver : DittoValueResolver<GridResolverAttribute>
+    public class GridValueResolver<T> : DittoValueResolver<GridResolverAttribute> where T : Control
     {
         public override object ResolveValue(ITypeDescriptorContext context, GridResolverAttribute attribute, CultureInfo culture)
         {
@@ -36,7 +36,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Grid.Resolvers
                             PreserveReferencesHandling = PreserveReferencesHandling.None
                         };
 
-                        settings.Converters.Add(new ControlConverter(content, culture));
+                        settings.Converters.Add(new ControlConverter<T>(content, culture));
 
                         grid = JsonConvert.DeserializeObject<GridModel>(gridHtml, settings);
                     }

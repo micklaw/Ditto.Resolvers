@@ -230,12 +230,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Archetypes\PriceList.cs" />
+    <Compile Include="Models\Ditto\TypeConverters\GridImageConverter.cs" />
     <Compile Include="Models\DocTypes\Base\Content.cs" />
     <Compile Include="Models\DocTypes\Base\Grid.cs" />
     <Compile Include="Models\DocTypes\Base\Page.cs" />
     <Compile Include="Models\DocTypes\Grid\GridTitle.cs" />
     <Compile Include="Models\DocTypes\TextPage.cs" />
     <Compile Include="Models\DocTypes\Home.cs" />
+    <Compile Include="Models\Grid\CustomControl.cs" />
+    <Compile Include="Models\Grid\Focalpoint.cs" />
+    <Compile Include="Models\Grid\Image.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -398,6 +402,7 @@
   <ItemGroup>
     <Content Include="Views\Partials\GridTitle.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

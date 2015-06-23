@@ -1,4 +1,5 @@
 ﻿using System;
+using Our.Umbraco.Ditto.Resolvers.Grid.Models;
 using Our.Umbraco.Ditto.Resolvers.Grid.Resolvers;
 
 namespace Our.Umbraco.Ditto.Resolvers.Grid.Attributes
@@ -11,7 +12,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Grid.Attributes
         }
 
         public GridResolverAttribute(string propertyAlias = null)
-            : base(typeof(GridValueResolver))
+            : base(typeof(GridValueResolver<Control>))
         {
             PropertyAlias = propertyAlias;
         }
