@@ -74,7 +74,7 @@
     <RootDir>$(MSBuildProjectDirectory)</RootDir>
     <BuildDir>$(MSBuildProjectDirectory)\_core\grid</BuildDir>
     <BuildNuGetDir>$(BuildDir)\_nuget\grid</BuildNuGetDir>
-    <ArtifactsDir>$(RootDir)\artifacts\grid</ArtifactsDir>
+    <ArtifactsDir>$(RootDir)\artifacts</ArtifactsDir>
     <ProjectDir>$(RootDir)\Our.Umbraco.Ditto.Resolvers.Grid</ProjectDir>
   </PropertyGroup>
 

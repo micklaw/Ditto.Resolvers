@@ -43,7 +43,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Tests.Shared.Services
 
             Assert.IsNotNull(propertyAttribute);
 
-            var propertyValue = attribute.GetProperty("PropertyAlias").GetValue(propertyAttribute);
+            var propertyValue = propertyAttribute.GetType().GetProperty("PropertyAlias").GetValue(propertyAttribute);
 
             Assert.AreEqual(propertyValue, constructorValues[0]);
 

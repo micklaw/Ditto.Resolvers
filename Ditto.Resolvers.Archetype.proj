@@ -74,7 +74,7 @@
     <RootDir>$(MSBuildProjectDirectory)</RootDir>
     <BuildDir>$(MSBuildProjectDirectory)\_core\archetype</BuildDir>
     <BuildNuGetDir>$(BuildDir)\_nuget\archetype</BuildNuGetDir>
-    <ArtifactsDir>$(RootDir)\artifacts\archetype</ArtifactsDir>
+    <ArtifactsDir>$(RootDir)\artifacts</ArtifactsDir>
     <ProjectDir>$(RootDir)\Our.Umbraco.Ditto.Resolvers.Archetype</ProjectDir>
   </PropertyGroup>
 
