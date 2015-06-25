@@ -102,3 +102,90 @@ There are two contrainsts around POCO Archetypes currently.
 * The Name of your class must match the Archetypes alias on the fieldset alias.  
 
 We can work around the second issue here in the coming weeks, but the first one is a deal breaker. Sorry if this offends you!
+
+## Grid
+
+So, it looks like we've made it, the Grid managed via Ditto and here's how. Firstly we create a DocType as we would usually, only his time we add a property which returns a **GridModel** class defined in our new Ditto.Grid assembly. We plug our new **GridResolverAttribute** on top and away Ditto goes, trying to map our Grid to a strongly typed object. Neat eh?
+
+```csharp
+	public class TextPage : Page
+    {
+        public TextPage(IPublishedContent content) : base(content)
+        {
+        }
+
+        public string Title { get; set; }
+
+        public HtmlString Body { get; set; }
+
+        [GridResolver]
+        public GridModel Grid { get; set; }
+    }
+```
+### Options
+
+#### Alias
+
+Much like the Archetype resolver, this one also has an Alias property so if you wanted to map to a specific grid property on your doc type, you could.
+
+```csharp
+	[GridResolver("someOtherAlias")]
+    public GridModel Grid { get; set; }
+```
+
+### Binding
+
+The **GridModel** class maps directly to the output Json of the grid, so all potential model binding on standard fields should hook up as standard using Json.Net, but what about the actual output value rendered in each control, seen as this is the only difficult bit, how can we map this to a strong type you ask? Enter Ditto.
+
+The classes below are the containers for the control and its descriptive editor values, with a little setup we can confgure the field **ConvertedValue** to return a type we expect.
+
+```csharp
+    public class Control
+    {
+        public object value { get; set; }
+
+        public virtual object ConvertedValue { get; set; }
+
+        public Editor editor { get; set; }
+    }
+
+    public class Editor
+    {
+        public string name { get; set; }
+
+        public string alias { get; set; }
+
+        public string view { get; set; }
+
+        public string render { get; set; }
+
+        public string icon { get; set; }
+    }
+```
+
+### Setup
+
+#### TypeConverters
+
+So if you're familiar with how Ditto works or even familiar with the **TypeConverter** class in .Net at all, then this will seem straight forward to you. You basically create a class which for a given value of a specific type, will return an object of your choosing. So the idea here is that you create (or reuse) your existing **TypeConverters** to bind the types returned via the Grid to strong types. I'm not going to show you a **TypeConverter** here as I'm sure if you dig around Ditto for 5 minutes there will be loads of examples. In fact, here's [how you do a TypeConverter](http://umbraco-ditto.readthedocs.org/en/latest/usage/#advanced-usage-type-converters), don't say I'm not good to you.
+
+#### TypeConverterLocator
+
+So now we have our **TypeConverters** we need a way to let Ditto know which Grid editor alias maps directly to a **TypeConverter**. Thankfully we have created a handy little resolver by the name of **DittoResolverTypeLocator** (rolls right of the tongue eh?), on startup this provides a nice lookup table for us to use in mapping multiple Grid editor alias to **TypeConverters**. See the blow example on how we register them:
+
+```csharp
+    protected override void OnApplicationStarting(object sender, EventArgs e)
+    {
+        ...
+
+        DittoResolverTypeLocator.Register<DittoHtmlStringConverter>("rte");
+        DittoResolverTypeLocator.Register<DittoHtmlStringConverter>("embed");
+        DittoResolverTypeLocator.Register<GridImageConverter>("media");
+    }
+```
+
+This simple syntax will store a nice easy lookup where we could even dynamically add or remove aliases, depending on how clever or risky we fancy being.
+
+### The Magic
+
+From there on in it's all magic, when you have your type converters made and registered on startup, anywhere you have a Grid field mapped with our new **GridResolverAttribute** then Ditto and this code will bind it up.
