@@ -166,6 +166,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                                         {
                                             var childArchetype = property.GetValue<ArchetypeModel>();
 
+                                            // [ML] - If this is an archetype, then kick off ths process again
+
                                             if (childArchetype != null)
                                             {
                                                 propertyInfo.SetValue(instance,
