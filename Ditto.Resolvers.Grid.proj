@@ -32,7 +32,7 @@
     <PackageId>Ditto.Resolvers.Grid</PackageId>
     <Copyright>Copyright &#169; 2014 Michael Law Web Development Ltd</Copyright>
     <Owners>Michael Law Web Development Ltd</Owners>
-    <IconUrl>https://raw.githubusercontent.com/leekelleher/umbraco-ditto/master/docs/assets/img/logo.png</IconUrl>
+    <IconUrl></IconUrl>
     <Tags>umbraco poco mapping strongly-typed grid</Tags>
     <Language>en-GB</Language>
     <RequireLicenseAcceptance>false</RequireLicenseAcceptance>
