@@ -42,9 +42,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
 
             if (properties == null)
             {
-                properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
-                        .Where(x => x.CanWrite)
-                        .ToArray();
+                properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => x.CanWrite).ToArray();
 
                 _propertyCache.TryAdd(type, properties);
             }
@@ -65,8 +63,9 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
         /// <param name="content">
         /// 
         /// </param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        private static object GetTypedArchetype(ArchetypeModel archetype, Type entityType, CultureInfo culture = null, IPublishedContent content = null)
+        private static object GetTypedArchetype(ArchetypeModel archetype, Type entityType, CultureInfo culture = null, IPublishedContent content = null, DittoValueResolverContext context = null)
         {
             // [ML] - Hurry up Elvis operator ?. !!
 
@@ -115,8 +114,18 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                         {
                             // [ML] - find the first class which matches name and base type
 
-                            instanceType =
-                                TypeHelper.GetTypeByName<ArchetypeFieldsetModel>(fieldset.Alias).FirstOrDefault();
+                            instanceType = TypeHelper.GetTypeByName<ArchetypeFieldsetModel>(fieldset.Alias,
+                                (mainType) =>
+                                {
+                                    var attribute = mainType.GetCustomAttribute<ArchetypeContentAttribute>();
+
+                                    if (!string.IsNullOrWhiteSpace(attribute?.Alias))
+                                    {
+                                        return attribute.Alias;
+                                    }
+
+                                    return null;
+                                });
 
                             if (instanceType != null)
                             {
@@ -148,36 +157,32 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                                         // [ML] - Get the alias for the property incase any child items are Archetypes
 
                                         var alias = propertyInfo.Name;
-                                        var attribute =
-                                            propertyInfo.GetCustomAttributes(typeof (ArchetypeResolverAttribute))
-                                                .FirstOrDefault() as ArchetypeResolverAttribute;
+                                        var attribute = propertyInfo.GetCustomAttributes(typeof (ArchetypeValueResolverAttribute)).FirstOrDefault() as ArchetypeValueResolverAttribute;
 
-                                        if (attribute != null && !string.IsNullOrWhiteSpace(attribute.PropertyAlias))
+                                        if (attribute != null && !string.IsNullOrWhiteSpace(attribute.Alias))
                                         {
-                                            alias = attribute.PropertyAlias;
+                                            alias = attribute.Alias;
                                         }
 
                                         // [ML] - Find any matching properties on the content
 
-                                        var property =
-                                            fieldset.Properties.FirstOrDefault(i => i.Alias.ToLower() == alias.ToLower());
+                                        var property = fieldset.Properties.FirstOrDefault(i => i.Alias.ToLower() == alias.ToLower());
 
                                         if (property != null)
                                         {
-                                            var childArchetype = property.GetValue<ArchetypeModel>();
-
                                             // [ML] - If this is an archetype, then kick off ths process again
 
-                                            if (childArchetype != null)
+                                            if (attribute != null)
                                             {
+                                                var childArchetype = property.GetValue<ArchetypeModel>();
+
                                                 propertyInfo.SetValue(instance,
-                                                    childArchetype.As(propertyInfo.PropertyType, culture, content));
+                                                    childArchetype.As(propertyInfo.PropertyType, culture, content, context));
                                             }
                                             else
                                             {
                                                 propertyInfo.SetValue(instance,
-                                                    service.Set(content, culture, propertyInfo, property.Value,
-                                                        instance));
+                                                    service.Set(content, culture, propertyInfo, property.Value, instance, context));
                                             }
                                         }
                                     }
@@ -214,6 +219,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
         /// <param name="culture">
         /// The <see cref="CultureInfo"/>
         /// </param>
+        /// <param name="context"></param>
         /// <typeparam name="T">
         /// The <see cref="Type"/> of items to return.
         /// </typeparam>
@@ -223,10 +229,11 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
         public static T As<T>(
             this ArchetypeModel archetype,
             IPublishedContent content = null,
-            CultureInfo culture = null)
+            CultureInfo culture = null,
+            DittoValueResolverContext context = null)
             where T : class
         {
-            return As(archetype, typeof(T), culture, content) as T;
+            return As(archetype, typeof(T), culture, content, context) as T;
         }
 
 
@@ -245,6 +252,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
         /// <param name="culture">
         /// The <see cref="CultureInfo"/>
         /// </param>
+        /// <param name="context"></param>
         /// <returns>
         /// The converted <see cref="Object"/> as the given type.
         /// </returns>
@@ -252,16 +260,17 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
             this ArchetypeModel archetype,
             Type type,
             CultureInfo culture = null,
-            IPublishedContent content = null)
+            IPublishedContent content = null,
+            DittoValueResolverContext context = null)
         {
             if (archetype == null)
             {
                 return null;
             }
 
-            using (DisposableTimer.DebugDuration(type, string.Format("ArchetypeModel As ({0})", type.Name), "Complete"))
+            using (ApplicationContext.Current.ProfilingLogger.DebugDuration(type, string.Format("ArchetypeModel As ({0})", type.Name), "Complete"))
             {
-                return GetTypedArchetype(archetype, type, culture, content);
+                return GetTypedArchetype(archetype, type, culture, content, context);
             }
         }
     }

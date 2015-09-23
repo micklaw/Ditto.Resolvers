@@ -11,7 +11,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
     /// </summary>
     public class DittoValueService : PropertyValueService
     {
-        private readonly Lazy<MethodInfo> _getTypedValue = new Lazy<MethodInfo>(() => typeof (PublishedContentExtensions).GetMethod("GetTypedValue", BindingFlags.NonPublic | BindingFlags.Static)); 
+        private readonly Lazy<MethodInfo> _getTypedValue = new Lazy<MethodInfo>(() => typeof (PublishedContentExtensions).GetMethod("GetConvertedValue", BindingFlags.NonPublic | BindingFlags.Static));
 
         /// <summary>
         /// Get the value using the Ditto GetTypedValue method on PublishedContentExtensions via reflection (breakable)
@@ -21,8 +21,9 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
         /// <param name="propertyInfo"></param>
         /// <param name="propertyValue"></param>
         /// <param name="instance"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        public override object Set(IPublishedContent content, CultureInfo culture,  PropertyInfo propertyInfo,  object propertyValue, object instance)
+        public override object Set(IPublishedContent content, CultureInfo culture, PropertyInfo propertyInfo, object propertyValue, object instance, DittoValueResolverContext context)
         {
             object result = null;
 

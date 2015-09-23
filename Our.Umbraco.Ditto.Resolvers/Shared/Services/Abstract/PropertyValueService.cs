@@ -15,7 +15,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services.Abstract
         /// <param name="propertyInfo"></param>
         /// <param name="propertyValue"></param>
         /// <param name="instance"></param>
+        /// <param name="context"></param>
         /// <returns></returns>
-        public abstract object Set(IPublishedContent content, CultureInfo culture, PropertyInfo propertyInfo, object propertyValue, object instance);
+        public abstract object Set(IPublishedContent content, CultureInfo culture, PropertyInfo propertyInfo, object propertyValue, object instance, DittoValueResolverContext context);
     }
 }

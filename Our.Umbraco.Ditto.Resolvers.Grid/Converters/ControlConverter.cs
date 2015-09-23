@@ -1,21 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Our.Umbraco.Ditto.Resolvers.Container;
 using Our.Umbraco.Ditto.Resolvers.Container.Abstract;
-using Our.Umbraco.Ditto.Resolvers.Grid.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Grid.Models;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services.Abstract;
-using Umbraco.Core;
 using Umbraco.Core.Models;
 
 namespace Our.Umbraco.Ditto.Resolvers.Grid.Converters
@@ -28,8 +21,9 @@ namespace Our.Umbraco.Ditto.Resolvers.Grid.Converters
 
         private IPublishedContent _content { get; set; }
         private CultureInfo _culture { get; set; }
+        public DittoValueResolverContext _context { get; set; }
 
-        public ControlConverter(IPublishedContent content, CultureInfo culture = null)
+        public ControlConverter(IPublishedContent content, CultureInfo culture = null, DittoValueResolverContext context = null)
         {
             _resolver = DependencyResolver.Current.GetService<IResolverLocator>() ?? DependencyResolver.Current.GetService<DittoResolverTypeLocator>();
             _valueService = DependencyResolver.Current.GetService<PropertyValueService>() ??  DependencyResolver.Current.GetService<DittoValueService>();
@@ -37,6 +31,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Grid.Converters
 
             _content = content;
             _culture = culture;
+            _context = context;
         }
 
         public Control Create(JObject jObject)
@@ -68,7 +63,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Grid.Converters
 
                 // [ML] - Set the value using Ditto
 
-                proxyObject.ConvertedValue = _valueService.Set(_content, _culture, convertProperyInfo, proxyObject.value, proxyObject);
+                proxyObject.ConvertedValue = _valueService.Set(_content, _culture, convertProperyInfo, proxyObject.value, proxyObject, _context);
 
                 return proxyObject;
             }

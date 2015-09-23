@@ -1,6 +1,7 @@
 ﻿using System;
+using System.CodeDom;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using Umbraco.Core;
 
 namespace Our.Umbraco.Ditto.Resolvers.Shared.Internal
@@ -11,16 +12,50 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Internal
     /// </summary>
     public static class TypeHelper
     {
+        private static ConcurrentDictionary<Type, Dictionary<string, Type>> _typeCache = new ConcurrentDictionary<Type, Dictionary<string, Type>>();
+
+
         /// <summary>
         /// Gets all Type instances matching the specified class name with just non-namespace qualified class name.
         /// </summary>
         /// <param name="className">Name of the class sought.</param>
+        /// <param name="getAtributeName"></param>
         /// <returns>Types that have the class name specified. They may not be in the same namespace.</returns>
-        public static IEnumerable<Type> GetTypeByName<T>(string className)
+        public static Type GetTypeByName<T>(string className, Func<Type, string> getAtributeName = null)
         {
-            var types = PluginManager.Current.ResolveTypes<T>();
+            var mainType = typeof (T);
 
-            return types.Where(type => type.Name.ToLower() == className.ToLower());
+            Dictionary<string, Type> types;
+            _typeCache.TryGetValue(mainType, out types);
+
+            if (types == null)
+            {
+                types = new Dictionary<string, Type>();
+
+                var foundTypes = PluginManager.Current.ResolveTypes<T>();
+
+                if (foundTypes != null)
+                {
+                    foreach (var foundType in foundTypes)
+                    {
+                        var alias = foundType.Name;
+
+                        if (getAtributeName != null)
+                        {
+                            alias = getAtributeName(foundType) ?? alias;
+                        }
+
+                        types.Add(alias.ToLower(), foundType);
+                    }
+
+                    _typeCache.TryAdd(mainType, types);
+                }
+            }
+
+            Type returnType;
+            types.TryGetValue(className.ToLower(), out returnType);
+
+            return returnType;
         }
     }
 }

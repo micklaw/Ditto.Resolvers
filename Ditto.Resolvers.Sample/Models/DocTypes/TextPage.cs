@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Web;
-using Ditto.Resolvers.Sample.Models.Archetypes;
+﻿using System.Web;
 using Ditto.Resolvers.Sample.Models.DocTypes.Base;
 using Ditto.Resolvers.Sample.Models.Grid;
-using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Grid.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Grid.Models;
 using Our.Umbraco.Ditto.Resolvers.Grid.Resolvers;
+using Our.Umbraco.Ditto.Resolvers.Resolvers.Attributes;
 using Umbraco.Core.Models;
-using Umbraco.Core.Models.PublishedContent;
 
 namespace Ditto.Resolvers.Sample.Models.DocTypes
 {
@@ -25,7 +19,7 @@ namespace Ditto.Resolvers.Sample.Models.DocTypes
 
         public HtmlString Body { get; set; }
 
-        [GridResolver]
+        [GridValueResolver]
         public GridModel Grid { get; set; }
     }
 }

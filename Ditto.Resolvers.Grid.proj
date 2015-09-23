@@ -18,8 +18,8 @@
   <PropertyGroup>
 	<Release>true</Release>
     <PackageName>Ditto.Resolvers.Grid</PackageName>
-    <MinUmbracoVersion>7.2.0</MinUmbracoVersion>
-    <Readme>Start using strongly typed Grid Models (mostly) with your Ditto POCOs</Readme>
+    <MinUmbracoVersion>7.3.0-RC</MinUmbracoVersion>
+    <Readme>Start using strongly typed Grid Models with your Ditto POCOs</Readme>
     <AuthorName>Michael Law</AuthorName>
     <AuthorUrl>https://github.com/micklaw/Ditto.Resolvers/graphs/contributors</AuthorUrl>
     <PackageLicenseName>MIT license</PackageLicenseName>
@@ -32,7 +32,7 @@
     <PackageId>Ditto.Resolvers.Grid</PackageId>
     <Copyright>Copyright &#169; 2014 Michael Law Web Development Ltd</Copyright>
     <Owners>Michael Law Web Development Ltd</Owners>
-    <IconUrl></IconUrl>
+    <IconUrl>https://upload.wikimedia.org/wikipedia/commons/6/6d/Beth_Ditto_IMG_5538.jpg</IconUrl>
     <Tags>umbraco poco mapping strongly-typed grid</Tags>
     <Language>en-GB</Language>
     <RequireLicenseAcceptance>false</RequireLicenseAcceptance>

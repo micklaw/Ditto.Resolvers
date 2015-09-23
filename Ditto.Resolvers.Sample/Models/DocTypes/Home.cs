@@ -5,6 +5,7 @@ using System.Web;
 using Ditto.Resolvers.Sample.Models.Archetypes;
 using Ditto.Resolvers.Sample.Models.DocTypes.Base;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers;
 using Umbraco.Core.Models;
 using Umbraco.Core.Models.PublishedContent;
 
@@ -20,7 +21,7 @@ namespace Ditto.Resolvers.Sample.Models.DocTypes
 
         public HtmlString Body { get; set; }
 
-        [ArchetypeResolver]
+        [ArchetypeValueResolver]
         public List<PriceList> PriceList { get; set; }
     }
 }

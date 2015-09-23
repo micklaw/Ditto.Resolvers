@@ -17,7 +17,7 @@
 		<tags></tags>
 		<dependencies>
 			<dependency id="UmbracoCms.Core" version="0.0.0" />
-			<dependency id="Our.Umbraco.Ditto" version="0.7.0" />
+			<dependency id="Our.Umbraco.Ditto" version="0.8.2" />
 			<dependency id="Archetype" version="1.7.5" />
 		</dependencies>
 	</metadata>

@@ -32,7 +32,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Tests.Shared.Services
             _emitter = new DittoEmitterService();
         }        
 
-        [TestCase("ConvertedValue", typeof(GridResolverAttribute), new [] { typeof(string) }, new object [] { "newAlias"}, Result = 1, TestName = "Proxy Made, Property Overriden, Attribute Added,With Param")]
+        [TestCase("ConvertedValue", typeof(GridValueResolverAttribute), new [] { typeof(string) }, new object [] { "newAlias"}, Result = 1, TestName = "Proxy Made, Property Overriden, Attribute Added,With Param")]
         public object OverrideProperty(string propertyName, Type attribute, Type[] constructorParams, object[] constructorValues)
         {
             var instance = _emitter.OverrideProperty<Control>(propertyName, attribute, constructorParams, constructorValues);
