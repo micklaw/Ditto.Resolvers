@@ -4,4 +4,4 @@ ECHO APPVEYOR_BUILD_NUMBER : %APPVEYOR_BUILD_NUMBER%
 ECHO APPVEYOR_BUILD_VERSION : %APPVEYOR_BUILD_VERSION%
 
 CALL .nuget\NuGet.exe restore Ditto.Resolvers.sln
-CALL "%WINDIR%\Microsoft.NET\Framework\v4.0.30319\msbuild.exe" package.proj
+CALL "C:\Program Files (x86)\MSBuild\14.0\Bin\msbuild.exe" package.proj
