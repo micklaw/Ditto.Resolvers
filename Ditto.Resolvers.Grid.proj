@@ -89,10 +89,9 @@
   <!-- CLEAN -->
   <Target Name="Clean" DependsOnTargets="GetProductVersion">
     <RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')" />
-    <RemoveDir Directories="$(ArtifactsDir)" Condition="Exists('$(ArtifactsDir)')" />
     <MakeDir Directories="$(BuildDir)" />
     <MakeDir Directories="$(BuildNuGetDir)" />
-    <MakeDir Directories="$(ArtifactsDir)" />
+    <MakeDir Directories="$(ArtifactsDir)" Condition="Exists('$(ArtifactsDir)') == 'false'" />
   </Target>
 
   <!-- UPDATE PROJECT ASSEMBLEY VERSION -->
