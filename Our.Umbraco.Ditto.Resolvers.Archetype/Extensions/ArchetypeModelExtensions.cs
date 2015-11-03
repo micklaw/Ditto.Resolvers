@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Web.Mvc;
 using Archetype.Models;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
+using Our.Umbraco.Ditto.Resolvers.Container;
+using Our.Umbraco.Ditto.Resolvers.Container.Abstract;
 using Our.Umbraco.Ditto.Resolvers.Shared.Internal;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services.Abstract;
@@ -74,8 +76,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                 // [ML] - Identify type
 
                 var isGenericList = entityType.IsGenericType &&
-                                    (entityType.GetGenericTypeDefinition() == typeof (IList<>) ||
-                                     entityType.GetGenericTypeDefinition() == typeof (List<>));
+                                    (entityType.GetGenericTypeDefinition() == typeof(IList<>) ||
+                                     entityType.GetGenericTypeDefinition() == typeof(List<>));
                 var propertyType = isGenericList ? entityType.GetGenericArguments().FirstOrDefault() : entityType;
 
                 if (propertyType == null)
@@ -86,8 +88,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
 
                 // [ML] - Build a generic list from the type found above
 
-                var constructedListType = typeof (List<>).MakeGenericType(propertyType);
-                var list = (IList) Activator.CreateInstance(constructedListType);
+                var constructedListType = typeof(List<>).MakeGenericType(propertyType);
+                var list = (IList)Activator.CreateInstance(constructedListType);
 
                 // [ML] - We have work to do, so get the service for resolving properties
 
@@ -95,11 +97,15 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                     DependencyResolver.Current.GetService<PropertyValueService>() ??
                     DependencyResolver.Current.GetService<DittoValueService>();
 
+                var aliasLocator =
+                    DependencyResolver.Current.GetService<IAliasLocator>() ??
+                    DependencyResolver.Current.GetService<DittoAliasLocator>();
+
                 if (service == null)
                 {
                     throw new NullReferenceException(
                         string.Format("No service found which implements '{0}'.",
-                            typeof (PropertyValueService).FullName));
+                            typeof(PropertyValueService).FullName));
                 }
 
                 foreach (var fieldset in archetype.Fieldsets)
@@ -114,8 +120,11 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                         {
                             // [ML] - find the first class which matches name and base type
 
-                            instanceType = TypeHelper.GetTypeByName<ArchetypeFieldsetModel>(fieldset.Alias,
-                                (mainType) =>
+                            var aliasMethod = aliasLocator.Resolve<ArchetypeContentAttribute>();
+
+                            if (aliasMethod == null)
+                            {
+                                aliasMethod = (mainType) =>
                                 {
                                     var attribute = mainType.GetCustomAttribute<ArchetypeContentAttribute>();
 
@@ -125,7 +134,10 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                                     }
 
                                     return null;
-                                });
+                                };
+                            }
+
+                            instanceType = TypeHelper.GetTypeByName<ArchetypeFieldsetModel>(fieldset.Alias, aliasMethod);
 
                             if (instanceType != null)
                             {
@@ -157,7 +169,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                                         // [ML] - Get the alias for the property incase any child items are Archetypes
 
                                         var alias = propertyInfo.Name;
-                                        var attribute = propertyInfo.GetCustomAttributes(typeof (ArchetypeValueResolverAttribute)).FirstOrDefault() as ArchetypeValueResolverAttribute;
+                                        var attribute = propertyInfo.GetCustomAttributes(typeof(ArchetypeValueResolverAttribute)).FirstOrDefault() as ArchetypeValueResolverAttribute;
 
                                         if (attribute != null && !string.IsNullOrWhiteSpace(attribute.Alias))
                                         {
