@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Web.Mvc;
 using Archetype.Models;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Models.Abstract;
 using Our.Umbraco.Ditto.Resolvers.Container;
 using Our.Umbraco.Ditto.Resolvers.Container.Abstract;
 using Our.Umbraco.Ditto.Resolvers.Shared.Internal;
@@ -82,8 +83,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
 
                 if (propertyType == null)
                 {
-                    throw new NullReferenceException(string.Format("The type ({0}) can not be inferred?",
-                        entityType.Name));
+                    throw new NullReferenceException($"The type ({entityType.Name}) can not be inferred?");
                 }
 
                 // [ML] - Build a generic list from the type found above
@@ -104,8 +104,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                 if (service == null)
                 {
                     throw new NullReferenceException(
-                        string.Format("No service found which implements '{0}'.",
-                            typeof(PropertyValueService).FullName));
+                        $"No service found which implements '{typeof (PropertyValueService).FullName}'.");
                 }
 
                 foreach (var fieldset in archetype.Fieldsets)
@@ -137,77 +136,90 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                                 };
                             }
 
-                            instanceType = TypeHelper.GetTypeByName<ArchetypeFieldsetModel>(fieldset.Alias, aliasMethod);
+                            instanceType = TypeHelper.GetTypeByAtttribute<ArchetypeContentAttribute>(fieldset.Alias, aliasMethod);
 
                             if (instanceType != null)
                             {
                                 _archetypeCache.TryAdd(fieldset.Alias, instanceType);
-
-                                AddToPropertyCache(instanceType);
                             }
+                        }
+
+                        // [ML] - If we cant find a mappping at all, then use the property type, but don't cache this as were not provided wth an alias
+
+                        if (instanceType == null)
+                        {
+                            instanceType = propertyType;
                         }
 
                         if (instanceType != null)
                         {
+                            // [ML] - Cache the properties so were not reflecting them every time
+
+                            PropertyInfo[] properties;
+                            _propertyCache.TryGetValue(instanceType, out properties);
+
+                            if (properties == null)
+                            {
+                                AddToPropertyCache(instanceType);
+                            }
+
                             // [ML] - Create an instance for each archetype object
 
-                            var instance = Activator.CreateInstance(instanceType) as ArchetypeFieldsetModel;
-
-                            if (instance != null)
+                            var instance = Activator.CreateInstance(instanceType);
+                            
+                            if (instance is IFieldset)
                             {
-                                instance.Properties = fieldset.Properties;
-                                instance.Disabled = fieldset.Disabled;
-                                instance.Alias = fieldset.Alias;
+                                instanceType.GetProperty("Disabled").SetValue(instance, fieldset.Disabled);
+                                instanceType.GetProperty("Alias").SetValue(instance, fieldset.Alias);
+                            }
 
-                                PropertyInfo[] properties;
-                                _propertyCache.TryGetValue(instanceType, out properties);
-
-                                if (properties != null && properties.Any())
+                            if (properties != null)
+                            {
+                                foreach (var propertyInfo in properties)
                                 {
-                                    foreach (var propertyInfo in properties)
+                                    // [ML] - Get the alias for the property incase any child items are Archetypes
+
+                                    var alias = propertyInfo.Name;
+                                    var attribute = propertyInfo.GetCustomAttributes(typeof (ArchetypeValueResolverAttribute)).FirstOrDefault() as ArchetypeValueResolverAttribute;
+
+                                    if (!string.IsNullOrWhiteSpace(attribute?.Alias))
                                     {
-                                        // [ML] - Get the alias for the property incase any child items are Archetypes
-
-                                        var alias = propertyInfo.Name;
-                                        var attribute = propertyInfo.GetCustomAttributes(typeof(ArchetypeValueResolverAttribute)).FirstOrDefault() as ArchetypeValueResolverAttribute;
-
-                                        if (attribute != null && !string.IsNullOrWhiteSpace(attribute.Alias))
-                                        {
-                                            alias = attribute.Alias;
-                                        }
-
-                                        // [ML] - Find any matching properties on the content
-
-                                        var property = fieldset.Properties.FirstOrDefault(i => i.Alias.ToLower() == alias.ToLower());
-
-                                        if (property != null)
-                                        {
-                                            // [ML] - If this is an archetype, then kick off ths process again
-
-                                            if (attribute != null)
-                                            {
-                                                var childArchetype = property.GetValue<ArchetypeModel>();
-
-                                                propertyInfo.SetValue(instance,
-                                                    childArchetype.As(propertyInfo.PropertyType, culture, content, context));
-                                            }
-                                            else
-                                            {
-                                                propertyInfo.SetValue(instance,
-                                                    service.Set(content, culture, propertyInfo, property.Value, instance, context));
-                                            }
-                                        }
+                                        alias = attribute.Alias;
                                     }
 
-                                    // [ML] - If this is not a generic type, then return the first item
+                                    // [ML] - Find any matching properties on the content
 
-                                    if (!isGenericList)
+                                    var property = fieldset.Properties.FirstOrDefault(i => i.Alias.ToLower() == alias.ToLower());
+
+                                    if (property != null)
                                     {
-                                        return instance;
-                                    }
+                                        // [ML] - If this is an archetype, then kick off ths process again
 
-                                    list.Add(instance);
+                                        if (attribute != null)
+                                        {
+                                            var childArchetype = property.GetValue<ArchetypeModel>();
+
+                                            propertyInfo.SetValue(instance,
+                                                childArchetype.As(propertyInfo.PropertyType, culture, content,
+                                                    context));
+                                        }
+                                        else
+                                        {
+                                            propertyInfo.SetValue(instance,
+                                                service.Set(content, culture, propertyInfo, property.Value, instance,
+                                                    context));
+                                        }
+                                    }
                                 }
+
+                                // [ML] - If this is not a generic type, then return the first item
+
+                                if (!isGenericList)
+                                {
+                                    return instance;
+                                }
+
+                                list.Add(instance);
                             }
                         }
                     }

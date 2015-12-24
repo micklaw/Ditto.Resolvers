@@ -326,6 +326,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Archetypes\Abstract\IMulti.cs" />
+    <Compile Include="Models\Archetypes\Number.cs" />
+    <Compile Include="Models\Archetypes\RichTextWithHeader.cs" />
     <Compile Include="Models\Archetypes\PriceList.cs" />
     <Compile Include="Models\Ditto\TypeConverters\GridImageConverter.cs" />
     <Compile Include="Models\DocTypes\Base\Content.cs" />

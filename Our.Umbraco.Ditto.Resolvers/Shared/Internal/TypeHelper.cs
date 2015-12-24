@@ -13,7 +13,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Internal
     public static class TypeHelper
     {
         private static ConcurrentDictionary<Type, Dictionary<string, Type>> _typeCache = new ConcurrentDictionary<Type, Dictionary<string, Type>>();
-
+        private static ConcurrentDictionary<Type, Dictionary<string, Type>> _typeByAttributeCache = new ConcurrentDictionary<Type, Dictionary<string, Type>>();
 
         /// <summary>
         /// Gets all Type instances matching the specified class name with just non-namespace qualified class name.
@@ -54,6 +54,43 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Internal
 
             Type returnType;
             types.TryGetValue(className.ToLower(), out returnType);
+
+            return returnType;
+        }
+
+        public static Type GetTypeByAtttribute<T>(string archetypeAlias, Func<Type, string> getAtributeName = null) where T : Attribute
+        {
+            var mainType = typeof(T);
+
+            Dictionary<string, Type> types;
+            _typeByAttributeCache.TryGetValue(mainType, out types);
+
+            if (types == null)
+            {
+                types = new Dictionary<string, Type>();
+
+                var foundTypes = PluginManager.Current.ResolveAttributedTypes<T>();
+
+                if (foundTypes != null)
+                {
+                    foreach (var foundType in foundTypes)
+                    {
+                        var alias = foundType.Name;
+
+                        if (getAtributeName != null)
+                        {
+                            alias = getAtributeName(foundType) ?? alias;
+                        }
+
+                        types.Add(alias.ToLower(), foundType);
+                    }
+
+                    _typeByAttributeCache.TryAdd(mainType, types);
+                }
+            }
+
+            Type returnType;
+            types.TryGetValue(archetypeAlias.ToLower(), out returnType);
 
             return returnType;
         }

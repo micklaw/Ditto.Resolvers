@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Ditto.Resolvers.Sample.Models.Archetypes;
+using Ditto.Resolvers.Sample.Models.Archetypes.Abstract;
 using Ditto.Resolvers.Sample.Models.DocTypes.Base;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers;
@@ -23,5 +24,8 @@ namespace Ditto.Resolvers.Sample.Models.DocTypes
 
         [ArchetypeValueResolver]
         public List<PriceList> PriceList { get; set; }
+
+        [ArchetypeValueResolver]
+        public List<IMulti> Multi { get; set; }
     }
 }

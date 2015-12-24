@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,6 +8,7 @@ using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using Archetype.Models;
 using NUnit.Framework;
 using Our.Umbraco.Ditto.Resolvers.Grid.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Grid.Models;
@@ -43,11 +45,49 @@ namespace Our.Umbraco.Ditto.Resolvers.Tests.Shared.Services
 
             Assert.IsNotNull(propertyAttribute);
 
-            var propertyValue = propertyAttribute.GetType().GetProperty("PropertyAlias").GetValue(propertyAttribute);
+            var propertyValue = propertyAttribute.GetType().GetProperty("Alias").GetValue(propertyAttribute);
 
             Assert.AreEqual(propertyValue, constructorValues[0]);
 
             return instance.ConvertedValue;
+        }
+
+        public interface IWidget
+        {
+            
+        }
+
+        public class MyModel : ArchetypeFieldsetModel, IWidget
+        {
+             
+        }
+
+        public class TypeModelA : MyModel
+        {
+
+        }
+
+        public class TypeModelB : MyModel
+        {
+
+        }
+
+        [Test]
+        public void SomeTest()
+        {
+            var type = typeof (IWidget);
+
+            var constructedListType = typeof(List<>).MakeGenericType(type);
+            var list = (IList)Activator.CreateInstance(constructedListType);
+
+            var item = Activator.CreateInstance(typeof(TypeModelA));
+            var item1 = Activator.CreateInstance(typeof(TypeModelB));
+
+            list.Add(item);
+            list.Add(item1);
+
+            Assert.IsNotEmpty(list);
+            Assert.IsTrue(list.Count == 2);
         }
 
         [TestCase("ConvertedValue", typeof(TypeConverterAttribute), new[] { typeof(Type) }, new object[] { typeof(DittoHtmlStringConverter) }, Result = true, TestName = "Proxy Made, Property Overriden, Attribute Added with Costructor Param")]

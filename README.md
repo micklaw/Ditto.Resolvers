@@ -26,10 +26,10 @@ Setup is easy. Below is a Ditto class which maps to my Home document type, this 
         public List<PriceList> PriceList { get; set; }
     }
 ```
-PriceList is just a POCO which inherits from the Archetype class **ArchetypeFieldsetModel**.
+PriceList is just a POCO
 
 ```csharp
-	public class PriceList : ArchetypeFieldsetModel
+	public class PriceList
     {
         public string Title { get; set; }
 
@@ -66,11 +66,39 @@ Your Archetype doesn't have to be a list! Simply use a single Type of your Arche
 
 #### Multiple fieldsets
 
-If you have enabled multiple fieldsets in your Archetype data type this would create a generic list including all of the different types of your POCOs which match an Archetype fieldset. The only caveat being your property on your Home document type would require to be a generic list with the base class **ArchetypeFieldsetModel** as its first generic property. This allows various different types inheriting from the base class to be assigned to the list.
+If you have enabled multiple fieldsets in your Archetype data type this would create a generic list including all of the different types of your POCOs which match an Archetype fieldset alias. The only caveat being you must decorate each POCO with an ArchetypeContentAttribute (you can also define an alternative alias on this too) and create an interface or abstract class for your Generic lists first generic Argument 'ISomething' or whatever you like really. This lets us know this POCO has derived types.
 
 ```csharp
+	public interface ISomething
+	{
+	}
+
+	...
+
 	[ArchetypeResolver]
-	public List<ArchetypeFieldsetModel> PriceList { get; set; }
+	public List<ISomething> PriceList { get; set; }
+```
+
+## Extras
+
+Archetype has handy => Disabled and => Alias fields on its ArchetypeFieldsetModel, so if you implement the IFieldset interface on your POCO, these fields will be wired up :)
+
+```csharp
+	public class PriceList : IFeildset
+    {
+        public string Title { get; set; }
+
+        public int Quantity { get; set; }
+
+        public string Price { get; set; }
+
+        [TypeConverter(typeof(DittoContentPickerConverter))]
+        public Content AssociatedPage { get; set; }
+
+		public string Alias { get; set; }
+
+        public bool Disabled { get; set; }
+    }
 ```
 
 #### Nested Archetypes
@@ -78,7 +106,7 @@ If you have enabled multiple fieldsets in your Archetype data type this would cr
 Rejoice. Nested Archetypes should also work so long as you have decorated the child Archetype property on your POCO with the **ArchetypeResolverAttribute**.
 
 ```csharp
-	public class PriceList : ArchetypeFieldsetModel
+	public class PriceList
     {
         public string Title { get; set; }
 
@@ -93,15 +121,6 @@ Rejoice. Nested Archetypes should also work so long as you have decorated the ch
 		public List<UrlPicker> Links { get; set; }
     }
 ```
-
-### Archetypes Constraints
-
-There are two contrainsts around POCO Archetypes currently. 
-
-* Each POCO must inherit from the **ArchetypeFieldsetModel** in the Archetype assembly.
-* The Name of your class must match the Archetypes alias on the fieldset alias.  
-
-We can work around the second issue here in the coming weeks, but the first one is a deal breaker. Sorry if this offends you!
 
 ## Grid
 
