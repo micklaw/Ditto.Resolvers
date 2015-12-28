@@ -1,38 +1,0 @@
-
--------------------------------------------------------------------------------
-   ROBOCOPY     ::     Robust File Copy for Windows                              
--------------------------------------------------------------------------------
-
-  Started : 17 June 2015 17:36:58
-   Source : C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Tests\bin\
-     Dest : C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Tests\App_Data\NuGetBackup\20150617-173658\bin\
-
-    Files : *.*
-	    
-  Options : *.* /S /E /DCOPY:DA /COPY:DAT /R:1000000 /W:30 
-
-------------------------------------------------------------------------------
-
-	                   0	C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Tests\bin\
-	  New Dir          6	C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Tests\bin\Debug\
-	    New File  		  151552	nunit.framework.dll  0%   86%  100%  
-	    New File  		  584600	nunit.framework.xml  0%   44%   89%  100%  
-	    New File  		    6656	Our.Umbraco.Ditto.Resolvers.Tests.dll  0%  100%  
-	    New File  		   15872	Our.Umbraco.Ditto.Resolvers.Tests.pdb  0%  100%  
-	    New File  		  317952	Rhino.Mocks.dll  0%   41%   82%  100%  
-	    New File  		  279081	Rhino.Mocks.xml  0%   46%   93%  100%  
-	  New Dir          0	C:\GIT\mlwd\Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.Tests\bin\Release\
-
-------------------------------------------------------------------------------
-
-               Total    Copied   Skipped  Mismatch    FAILED    Extras
-    Dirs :         3         2         0         0         0         0
-   Files :         6         6         0         0         0         0
-   Bytes :    1.29 m    1.29 m         0         0         0         0
-   Times :   0:00:00   0:00:00                       0:00:00   0:00:00
-
-
-   Speed :            28844957 Bytes/sec.
-   Speed :            1650.521 MegaBytes/min.
-   Ended : 17 June 2015 17:36:58
-

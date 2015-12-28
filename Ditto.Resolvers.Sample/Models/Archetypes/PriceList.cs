@@ -6,6 +6,7 @@ using System.Web;
 using Archetype.Models;
 using Ditto.Resolvers.Sample.Models.DocTypes.Base;
 using Our.Umbraco.Ditto;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Models.Abstract;
 
 namespace Ditto.Resolvers.Sample.Models.Archetypes
@@ -24,5 +25,8 @@ namespace Ditto.Resolvers.Sample.Models.Archetypes
         public string Alias { get; set; }
 
         public bool Disabled { get; set; }
+
+        [ArchetypeValueResolver(alias: "randomAlias")]
+        public string AnotherText { get; set; }
     }
 }

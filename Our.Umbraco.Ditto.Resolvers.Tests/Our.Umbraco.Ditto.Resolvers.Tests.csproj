@@ -32,8 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Archetype, Version=1.7.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Archetype.1.7.5\lib\net40\Archetype.dll</HintPath>
+    <Reference Include="Archetype, Version=1.12.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Archetype.1.12.1\lib\net40\Archetype.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="AutoMapper">
@@ -137,6 +137,10 @@
     </Reference>
     <Reference Include="MiniProfiler">
       <HintPath>..\packages\MiniProfiler.2.1.0\lib\net40\MiniProfiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="MySql.Data, Version=6.9.7.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>..\packages\MySql.Data.6.9.7\lib\net45\MySql.Data.dll</HintPath>
@@ -280,7 +284,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Archetype\Resolvers\ArchetypeValueResolverTests.cs" />
     <Compile Include="Container\DittoResolverTypeLocatorTests.cs" />
+    <Compile Include="Fakes\ArchetypeValueResolverShim.cs" />
+    <Compile Include="Fakes\FakePublishedContentModel.cs" />
+    <Compile Include="Fakes\FakePublishedProperty.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Shared\Services\EmitServiceTests.cs" />
   </ItemGroup>
@@ -289,6 +297,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers.Archetype\Our.Umbraco.Ditto.Resolvers.Archetype.csproj">
+      <Project>{3B3839A7-8388-436A-92BC-E8A0B3488D7E}</Project>
+      <Name>Our.Umbraco.Ditto.Resolvers.Archetype</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers.Grid\Our.Umbraco.Ditto.Resolvers.Grid.csproj">
       <Project>{03dd3d84-9117-4c1d-9aa1-f0e028ebe387}</Project>
       <Name>Our.Umbraco.Ditto.Resolvers.Grid</Name>
@@ -297,34 +309,6 @@
       <Project>{a2dd3a98-c800-4aef-9176-b6fc58003b33}</Project>
       <Name>Our.Umbraco.Ditto.Resolvers</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="App_Plugins\Archetype\css\archetype.css" />
-    <Content Include="App_Plugins\Archetype\js\archetype.js" />
-    <Content Include="App_Plugins\Archetype\langs\da-dk.js" />
-    <Content Include="App_Plugins\Archetype\langs\da.js" />
-    <Content Include="App_Plugins\Archetype\langs\de-de.js" />
-    <Content Include="App_Plugins\Archetype\langs\de.js" />
-    <Content Include="App_Plugins\Archetype\langs\en-gb.js" />
-    <Content Include="App_Plugins\Archetype\langs\en-us.js" />
-    <Content Include="App_Plugins\Archetype\langs\en.js" />
-    <Content Include="App_Plugins\Archetype\langs\es-es.js" />
-    <Content Include="App_Plugins\Archetype\langs\es.js" />
-    <Content Include="App_Plugins\Archetype\langs\fr-fr.js" />
-    <Content Include="App_Plugins\Archetype\langs\he-il.js" />
-    <Content Include="App_Plugins\Archetype\langs\it-it.js" />
-    <Content Include="App_Plugins\Archetype\langs\ja-jp.js" />
-    <Content Include="App_Plugins\Archetype\langs\ko-kr.js" />
-    <Content Include="App_Plugins\Archetype\langs\nb-no.js" />
-    <Content Include="App_Plugins\Archetype\langs\nl-nl.js" />
-    <Content Include="App_Plugins\Archetype\langs\pl-pl.js" />
-    <Content Include="App_Plugins\Archetype\langs\pt-br.js" />
-    <Content Include="App_Plugins\Archetype\langs\ru-ru.js" />
-    <Content Include="App_Plugins\Archetype\langs\sv-se.js" />
-    <Content Include="App_Plugins\Archetype\langs\zh-cn.js" />
-    <Content Include="App_Plugins\Archetype\views\archetype.config.html" />
-    <Content Include="App_Plugins\Archetype\views\archetype.default.html" />
-    <Content Include="App_Plugins\Archetype\views\archetype.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

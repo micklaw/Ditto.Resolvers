@@ -12,6 +12,16 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers
 {
     public class ArchetypeValueResolver : DittoValueResolver<DittoValueResolverContext, ArchetypeValueResolverAttribute>
     {
+        public ArchetypeValueResolver()
+        {
+            
+        }
+
+        protected ArchetypeValueResolver(DittoValueResolverContext context)
+        {
+            Context = context;
+        }
+
         public override object ResolveValue()
         {
             var content = Context.Instance as IPublishedContent;

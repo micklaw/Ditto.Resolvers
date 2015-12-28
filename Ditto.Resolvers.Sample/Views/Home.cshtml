@@ -15,7 +15,7 @@
     {
         var url = item.AssociatedPage != null ? item.AssociatedPage.Url : "javascript:void(0);";
 
-        <li>@item.Quantity x @item.Title = @item.Price | <a href="@url">View</a></li>
+        <li> @item.Title @(!string.IsNullOrWhiteSpace(item.AnotherText) ? "(" + item.AnotherText + ")" : ""): @item.Quantity x @item.Title = @item.Price | <a href="@url">View</a></li>
     }
 </ul>
 

@@ -70,9 +70,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
         /// <returns></returns>
         private static object GetTypedArchetype(ArchetypeModel archetype, Type entityType, CultureInfo culture = null, IPublishedContent content = null, DittoValueResolverContext context = null)
         {
-            // [ML] - Hurry up Elvis operator ?. !!
-
-            if (archetype != null && (archetype.Fieldsets != null && archetype.Fieldsets.Any()))
+            if (archetype?.Fieldsets != null && archetype.Fieldsets.Any())
             {
                 // [ML] - Identify type
 
@@ -153,7 +151,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
 
                         if (instanceType != null)
                         {
-                            // [ML] - Cache the properties so were not reflecting them every time
+                            // [ML] - Cache the properties so were not reflecting them every time then get them again
 
                             PropertyInfo[] properties;
                             _propertyCache.TryGetValue(instanceType, out properties);
@@ -161,6 +159,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                             if (properties == null)
                             {
                                 AddToPropertyCache(instanceType);
+
+                                _propertyCache.TryGetValue(instanceType, out properties);
                             }
 
                             // [ML] - Create an instance for each archetype object
@@ -195,19 +195,15 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                                     {
                                         // [ML] - If this is an archetype, then kick off ths process again
 
-                                        if (attribute != null)
-                                        {
-                                            var childArchetype = property.GetValue<ArchetypeModel>();
+                                        var childArchetype = property.GetValue<ArchetypeModel>();
 
-                                            propertyInfo.SetValue(instance,
-                                                childArchetype.As(propertyInfo.PropertyType, culture, content,
-                                                    context));
+                                        if (childArchetype != null)
+                                        {
+                                            propertyInfo.SetValue(instance, childArchetype.As(propertyInfo.PropertyType, culture, content, context));
                                         }
                                         else
                                         {
-                                            propertyInfo.SetValue(instance,
-                                                service.Set(content, culture, propertyInfo, property.Value, instance,
-                                                    context));
+                                            propertyInfo.SetValue(instance, service.Set(content, culture, propertyInfo, property.Value, instance, context));
                                         }
                                     }
                                 }
