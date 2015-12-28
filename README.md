@@ -48,11 +48,23 @@ Now when we use Ditto to map the Home document type via the .As<Home>(); extensi
 
 #### Alias
 
-If your Archetype property on your Home document type doesn't match the Property name, you can set this in the **ArchetypeResolverAttribute**.
+If your Archetype property alis on your Home document type doesn't match the Property name, you can set this in the **ArchetypeValueResolverAttribute**.
 
 ```csharp
-	[ArchetypeResolver("HomeDocTypePriceListAlias")]
+	[ArchetypeValueResolver("HomeDocTypePriceListAlias")]
 	public List<PriceList> PriceList { get; set; }
+```
+
+Likewise you can use this if a property on your Archetype class doesnt match the alias on your configuration of your Archetype property
+
+```csharp
+	public class PriceList : IFieldset
+    {
+        ...
+
+        [ArchetypeValueResolver(alias: "randomAlias")]
+        public string AnotherText { get; set; }
+    }
 ```
 
 #### Single items
@@ -60,7 +72,7 @@ If your Archetype property on your Home document type doesn't match the Property
 Your Archetype doesn't have to be a list! Simply use a single Type of your Archetype POCO and it will attempt to map to that.
 
 ```csharp
-	[ArchetypeResolver]
+	[ArchetypeValueResolver]
 	public PriceList PriceList { get; set; }
 ```
 
@@ -75,7 +87,7 @@ If you have enabled multiple fieldsets in your Archetype data type this would cr
 
 	...
 
-	[ArchetypeResolver]
+	[ArchetypeValueResolver]
 	public List<ISomething> PriceList { get; set; }
 ```
 
@@ -117,7 +129,7 @@ Rejoice. Nested Archetypes should also work so long as you have decorated the ch
         [TypeConverter(typeof(DittoContentPickerConverter))]
         public Content AssociatedPage { get; set; }
         
-        [ArchetypeResolver]
+        [ArchetypeValueResolver]
 		public List<UrlPicker> Links { get; set; }
     }
 ```
