@@ -22,7 +22,7 @@ Setup is easy. Below is a Ditto class which maps to my Home document type, this 
 
         public HtmlString Body { get; set; }
 
-        [ArchetypeResolver]
+        [ArchetypeValueResolver]
         public List<PriceList> PriceList { get; set; }
     }
 ```
@@ -51,8 +51,13 @@ Now when we use Ditto to map the Home document type via the .As<Home>(); extensi
 If your Archetype property alis on your Home document type doesn't match the Property name, you can set this in the **ArchetypeValueResolverAttribute**.
 
 ```csharp
-	[ArchetypeValueResolver("HomeDocTypePriceListAlias")]
-	public List<PriceList> PriceList { get; set; }
+	public class Home : Page
+    {
+		...
+
+		[ArchetypeValueResolver("HomeDocTypePriceListAlias")]
+		public List<PriceList> PriceList { get; set; }
+	}
 ```
 
 You can use a **ArchetypePropertyAttribute** if a property on your Archetype class doesnt match the alias on your configuration of your Archetype property
@@ -63,7 +68,7 @@ You can use a **ArchetypePropertyAttribute** if a property on your Archetype cla
         ...
 
         [ArchetypePropertyAttribute("randomAlias")]
-        public string AnotherText { get; set; }
+        public string Price { get; set; }
     }
 ```
 
@@ -72,8 +77,13 @@ You can use a **ArchetypePropertyAttribute** if a property on your Archetype cla
 Your Archetype doesn't have to be a list! Simply use a single Type of your Archetype POCO and it will attempt to map to that.
 
 ```csharp
-	[ArchetypeValueResolver]
-	public PriceList PriceList { get; set; }
+	public class Home : Page
+    {
+		...
+
+		[ArchetypeValueResolver]
+		public PriceList PriceList { get; set; }
+	}
 ```
 
 #### Multiple fieldsets
@@ -97,10 +107,13 @@ If you have enabled multiple fieldsets in your Archetype data type this would cr
 	...
 	}
 
-	...
+	public class Home : Page
+    {
+		...
 
-	[ArchetypeValueResolver]
-	public List<ISomething> PriceList { get; set; }
+		[ArchetypeValueResolver]
+		public List<ISomething> PriceList { get; set; }
+	}
 ```
 
 ## Extras
@@ -141,7 +154,8 @@ Rejoice. Nested Archetypes should also work so long as you have decorated the ch
         [TypeConverter(typeof(DittoContentPickerConverter))]
         public Content AssociatedPage { get; set; }
         
-        [ArchetypeValueResolver]
+		[ArchetypeContent("overrideAliasCheck")]
+        [ArchetypeValueResolver("overridenByArchetypeContentAttributeAbove")]
 		public List<UrlPicker> Links { get; set; }
     }
 ```
