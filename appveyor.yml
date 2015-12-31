@@ -1,4 +1,4 @@
-version: 0.2.0.{build}
+version: 0.2.3.{build}
 
 init:
   - set PACKAGE_PRERELEASE_SUFFIX=
@@ -6,11 +6,26 @@ init:
 build_script:
 - build-appveyor.cmd
 
+test:
+  assemblies:
+    - 'Our.Umbraco.Ditto.Resolvers.Tests.dll'
+	
 artifacts:
   - path: artifacts\*.nupkg
     name: nuget
 
 deploy:
+	# GitHub Deployment for releases
+  - provider: GitHub
+    auth_token:
+      secure: YU4cemY4TPZOCG/zDtTQJybuIaIh62eIfFMAwyTzgUmwCWeHFRGZHePwttPvwcyP
+    artifact: /.*\.zip/            # upload all Zip packages to release assets
+    draft: false
+    prerelease: false
+    on:
+      branch: master
+      appveyor_repo_tag: true        # deploy on tag push only
+	  
      # NuGet Deployment for releases
   - provider: NuGet
     server: 
@@ -19,3 +34,4 @@ deploy:
     artifact: nuget
     on:
       branch: master
+	  appveyor_repo_tag: true
