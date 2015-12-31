@@ -9,7 +9,7 @@ build_script:
 test:
   assemblies:
     - 'Our.Umbraco.Ditto.Resolvers.Tests.dll'
-	
+
 artifacts:
   - path: artifacts\*.nupkg
     name: nuget
