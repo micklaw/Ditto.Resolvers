@@ -21,7 +21,7 @@ Setup is easy. Below is a Ditto class which maps to my Home document type, this 
         public string Title { get; set; }
 
         public HtmlString Body { get; set; }
-
+		 
         [ArchetypeValueResolver]
         public List<PriceList> PriceList { get; set; }
     }
