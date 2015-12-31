@@ -15,7 +15,7 @@ artifacts:
     name: nuget
 
 deploy:
-	# GitHub Deployment for releases
+    # GitHub Deployment for releases
   - provider: GitHub
     auth_token:
       secure: YU4cemY4TPZOCG/zDtTQJybuIaIh62eIfFMAwyTzgUmwCWeHFRGZHePwttPvwcyP
@@ -34,4 +34,4 @@ deploy:
     artifact: nuget
     on:
       branch: master
-	  appveyor_repo_tag: true
+      appveyor_repo_tag: true
