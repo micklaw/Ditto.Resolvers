@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<plugins>
+  <baseType type="Our.Umbraco.Ditto.Resolvers.Archetype.Attributes.ArchetypeContentAttribute" resolutionType="FindAttributedTypes" />
+</plugins>

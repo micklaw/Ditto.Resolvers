@@ -2,10 +2,10 @@
 
 namespace Our.Umbraco.Ditto.Resolvers.Archetype.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class ArchetypeContentAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class ArchetypePropertyAttribute : Attribute
     {
-        public ArchetypeContentAttribute(string alias = null) 
+        public ArchetypePropertyAttribute(string alias = null) 
         {
             Alias = alias;
         }

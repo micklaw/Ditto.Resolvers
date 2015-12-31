@@ -22,7 +22,7 @@ namespace Ditto.Resolvers.Sample.Models.DocTypes
 
         public HtmlString Body { get; set; }
 
-        [ArchetypeValueResolver]
+        [ArchetypeProperty("priceList"), ArchetypeValueResolver]
         public List<PriceList> PriceList { get; set; }
 
         [ArchetypeValueResolver]

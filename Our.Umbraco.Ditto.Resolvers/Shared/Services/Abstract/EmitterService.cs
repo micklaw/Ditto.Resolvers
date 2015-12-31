@@ -1,7 +1,4 @@
 ﻿using System;
-using Lucene.Net.Analysis.Tokenattributes;
-using Lucene.Net.Search.Function;
-using Umbraco.Core.Persistence.Migrations.Syntax.Update;
 
 namespace Our.Umbraco.Ditto.Resolvers.Shared.Services.Abstract
 {

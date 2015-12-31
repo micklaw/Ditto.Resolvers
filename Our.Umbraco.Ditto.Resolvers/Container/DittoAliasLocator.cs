@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Lucene.Net.Util.Cache;
 using Our.Umbraco.Ditto.Resolvers.Container.Abstract;
-using umbraco.BusinessLogic.Actions;
 
 namespace Our.Umbraco.Ditto.Resolvers.Container
 {

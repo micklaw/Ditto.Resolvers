@@ -26,7 +26,7 @@ namespace Ditto.Resolvers.Sample.Models.Archetypes
 
         public bool Disabled { get; set; }
 
-        [ArchetypeValueResolver("randomAlias")]
+        [ArchetypeProperty("randomAlias")]
         public string AnotherText { get; set; }
     }
 }

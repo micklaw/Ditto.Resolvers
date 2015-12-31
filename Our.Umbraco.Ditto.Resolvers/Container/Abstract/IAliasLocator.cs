@@ -1,8 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace Our.Umbraco.Ditto.Resolvers.Container.Abstract
 {
+    /// <summary>
+    /// Resolve 
+    /// </summary>
     public interface IAliasLocator
     {
         Func<Type, string> Resolve<T>();

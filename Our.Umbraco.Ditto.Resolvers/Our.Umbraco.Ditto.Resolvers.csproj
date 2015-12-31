@@ -276,6 +276,7 @@
     <Compile Include="Shared\Services\DittoEmitterService.cs" />
     <Compile Include="Shared\Services\DittoValueService.cs" />
     <Compile Include="Shared\Services\Abstract\EmitterService.cs" />
+    <Compile Include="Utils\PreConditions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

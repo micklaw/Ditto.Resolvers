@@ -55,14 +55,14 @@ If your Archetype property alis on your Home document type doesn't match the Pro
 	public List<PriceList> PriceList { get; set; }
 ```
 
-Likewise you can use this if a property on your Archetype class doesnt match the alias on your configuration of your Archetype property
+You can use a **ArchetypePropertyAttribute** if a property on your Archetype class doesnt match the alias on your configuration of your Archetype property
 
 ```csharp
 	public class PriceList : IFieldset
     {
         ...
 
-        [ArchetypeValueResolver(alias: "randomAlias")]
+        [ArchetypePropertyAttribute("randomAlias")]
         public string AnotherText { get; set; }
     }
 ```
@@ -78,11 +78,23 @@ Your Archetype doesn't have to be a list! Simply use a single Type of your Arche
 
 #### Multiple fieldsets
 
-If you have enabled multiple fieldsets in your Archetype data type this would create a generic list including all of the different types of your POCOs which match an Archetype fieldset alias. The only caveat being you must decorate each POCO with an ArchetypeContentAttribute (you can also define an alternative alias on this too) and create an interface or abstract class for your Generic lists first generic Argument 'ISomething' or whatever you like really. This lets us know this POCO has derived types.
+If you have enabled multiple fieldsets in your Archetype data type this would create a generic list including all of the different types of your POCOs which match an Archetype fieldset alias. The only caveat being you must decorate each POCO with an **ArchetypeContentAttribute** (you can also define an alternative alias on this too) and create an interface or abstract class for your Generic lists first generic Argument 'ISomething' or whatever you like really. This lets us know this POCO has derived types.
 
 ```csharp
 	public interface ISomething
 	{
+	}
+
+	[ArchetypeContent]
+	public class PriceList : ISomething, IFeildset
+    {
+	...
+	}
+
+	[ArchetypeContent("potentiallySomeOtherArchetypeAlias")]
+	public class PriceListNew : ISomething, IFeildset
+    {
+	...
 	}
 
 	...

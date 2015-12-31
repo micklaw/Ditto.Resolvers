@@ -8,12 +8,17 @@ using Ditto.Resolvers.Sample.Models.Archetypes.Abstract;
 using Ditto.Resolvers.Sample.Models.DocTypes.Base;
 using Our.Umbraco.Ditto;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Models.Abstract;
 
 namespace Ditto.Resolvers.Sample.Models.Archetypes
 {
     [ArchetypeContent]
-    public class Number : IMulti
+    public class Number : IMulti, IFieldset
     {
         public int Main { get; set; }
+
+        public string Alias { get; set; }
+
+        public bool Disabled { get; set; }
     }
 }

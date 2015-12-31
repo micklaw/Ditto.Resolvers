@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Web.Mvc;
 using Our.Umbraco.Ditto.Resolvers.Container;
 using Our.Umbraco.Ditto.Resolvers.Container.Abstract;
@@ -38,21 +37,22 @@ namespace Our.Umbraco.Ditto.Resolvers.Resolvers
                 var listType = typeof(List<>).MakeGenericType(targetType);
                 var list = (IList)Activator.CreateInstance(listType);
 
-                foreach (var child in content.Children.OfType<IPublishedContent>())
+                foreach (var child in content.Children)
                 {
-                    var aliasLocator =
-                        DependencyResolver.Current.GetService<IAliasLocator>() ??
-                        DependencyResolver.Current.GetService<DittoAliasLocator>();
-
-                    var type = TypeHelper.GetTypeByName<PublishedContentModel>(child.DocumentTypeAlias, aliasLocator.Resolve<PublishedContentModel>());
-
-                    if (type != null)
+                    if (child != null)
                     {
-                        var model = child.As(type);
+                        var aliasLocator = DependencyResolver.Current.GetService<IAliasLocator>() ?? DependencyResolver.Current.GetService<DittoAliasLocator>();
 
-                        if (model != null)
+                        var type = TypeHelper.GetTypeByName<PublishedContentModel>(child.DocumentTypeAlias, aliasLocator.Resolve<PublishedContentModel>());
+
+                        if (type != null)
                         {
-                            list.Add(model);
+                            var model = child.As(type);
+
+                            if (model != null)
+                            {
+                                list.Add(model);
+                            }
                         }
                     }
                 }

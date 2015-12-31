@@ -26,12 +26,20 @@ namespace Our.Umbraco.Ditto.Resolvers.Tests.Fakes
             int id,
             string name,
             IEnumerable<IPublishedContent> children,
-            ICollection<IPublishedProperty> properties)
+            ICollection<IPublishedProperty> properties) : this(id, name, children, properties, null) { }
+
+        public FakePublishedContentModel(
+            int id,
+            string name,
+            IEnumerable<IPublishedContent> children,
+            ICollection<IPublishedProperty> properties,
+            IPublishedContent parent)
         {
             Properties = properties;
             Id = id;
             Name = name;
             Children = children;
+            Parent = parent;
         }
 
         public int GetIndex()

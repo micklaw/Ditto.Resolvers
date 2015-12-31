@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -9,6 +8,8 @@ using System.Web.Mvc;
 using Archetype.Models;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Models.Abstract;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Services.Abstract;
+using Our.Umbraco.Ditto.Resolvers.Archetype.Utils;
 using Our.Umbraco.Ditto.Resolvers.Container;
 using Our.Umbraco.Ditto.Resolvers.Container.Abstract;
 using Our.Umbraco.Ditto.Resolvers.Shared.Internal;
@@ -17,38 +18,22 @@ using Our.Umbraco.Ditto.Resolvers.Shared.Services.Abstract;
 using Umbraco.Core;
 using Umbraco.Core.Models;
 
-namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
+namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
 {
-    public static class ArchetypeModelExtensions
+    public class ArchetypeBindingService : IArchetypeBindingService
     {
-        /// <summary>
-        /// The cache for storing constructor parameter information.
-        /// </summary>
-        private static readonly ConcurrentDictionary<string, Type> _archetypeCache
-            = new ConcurrentDictionary<string, Type>();
+        private PropertyValueService _valueService { get; }
+        private IAliasLocator _aliasLocator { get; }
 
-        /// <summary>
-        /// The cache for storing type property information.
-        /// </summary>
-        private static readonly ConcurrentDictionary<Type, PropertyInfo[]> _propertyCache
-            = new ConcurrentDictionary<Type, PropertyInfo[]>();
-
-        /// <summary>
-        /// Add properties of type to the cache
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        private static void AddToPropertyCache(Type type)
+        public ArchetypeBindingService()
         {
-            PropertyInfo[] properties;
-            _propertyCache.TryGetValue(type, out properties);
+            
+        }
 
-            if (properties == null)
-            {
-                properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance).Where(x => x.CanWrite).ToArray();
-
-                _propertyCache.TryAdd(type, properties);
-            }
+        public ArchetypeBindingService(PropertyValueService valueService, IAliasLocator aliasLocator)
+        {
+            _valueService = valueService;
+            _aliasLocator = aliasLocator;
         }
 
         /// <summary>
@@ -68,15 +53,13 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
         /// </param>
         /// <param name="context"></param>
         /// <returns></returns>
-        private static object GetTypedArchetype(ArchetypeModel archetype, Type entityType, CultureInfo culture = null, IPublishedContent content = null, DittoValueResolverContext context = null)
+        private object GetTypedArchetype(ArchetypeModel archetype, Type entityType, CultureInfo culture = null, IPublishedContent content = null, DittoValueResolverContext context = null)
         {
             if (archetype?.Fieldsets != null && archetype.Fieldsets.Any())
             {
                 // [ML] - Identify type
 
-                var isGenericList = entityType.IsGenericType &&
-                                    (entityType.GetGenericTypeDefinition() == typeof(IList<>) ||
-                                     entityType.GetGenericTypeDefinition() == typeof(List<>));
+                var isGenericList = entityType.IsGenericType && (entityType.GetGenericTypeDefinition() == typeof(IList<>) || entityType.GetGenericTypeDefinition() == typeof(List<>));
                 var propertyType = isGenericList ? entityType.GetGenericArguments().FirstOrDefault() : entityType;
 
                 if (propertyType == null)
@@ -89,29 +72,16 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                 var constructedListType = typeof(List<>).MakeGenericType(propertyType);
                 var list = (IList)Activator.CreateInstance(constructedListType);
 
-                // [ML] - We have work to do, so get the service for resolving properties
+                // [ML] - We have work to do, so if the service isnt populated get the default implementations
 
-                var service =
-                    DependencyResolver.Current.GetService<PropertyValueService>() ??
-                    DependencyResolver.Current.GetService<DittoValueService>();
-
-                var aliasLocator =
-                    DependencyResolver.Current.GetService<IAliasLocator>() ??
-                    DependencyResolver.Current.GetService<DittoAliasLocator>();
-
-                if (service == null)
-                {
-                    throw new NullReferenceException(
-                        $"No service found which implements '{typeof (PropertyValueService).FullName}'.");
-                }
+                var service = _valueService ?? DependencyResolver.Current.GetService<DittoValueService>();
+                var aliasLocator = _aliasLocator ?? DependencyResolver.Current.GetService<DittoAliasLocator>();
 
                 foreach (var fieldset in archetype.Fieldsets)
                 {
                     if (fieldset.Properties != null && fieldset.Properties.Any())
                     {
-                        Type instanceType;
-
-                        _archetypeCache.TryGetValue(fieldset.Alias, out instanceType);
+                        var instanceType = ArchetypeCache.GetTypeFromAlias(fieldset.Alias);
 
                         if (instanceType == null)
                         {
@@ -138,7 +108,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
 
                             if (instanceType != null)
                             {
-                                _archetypeCache.TryAdd(fieldset.Alias, instanceType);
+                                ArchetypeCache.AddTypeByAlias(fieldset.Alias, instanceType);
                             }
                         }
 
@@ -153,14 +123,13 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                         {
                             // [ML] - Cache the properties so were not reflecting them every time then get them again
 
-                            PropertyInfo[] properties;
-                            _propertyCache.TryGetValue(instanceType, out properties);
+                            var properties = ArchetypeCache.GetPropertiesFromType(instanceType);
 
                             if (properties == null)
                             {
-                                AddToPropertyCache(instanceType);
+                                ArchetypeCache.AddToPropertyCache(instanceType);
 
-                                _propertyCache.TryGetValue(instanceType, out properties);
+                                properties = ArchetypeCache.GetPropertiesFromType(instanceType);
                             }
 
                             // [ML] - Create an instance for each archetype object
@@ -177,17 +146,23 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                             {
                                 foreach (var propertyInfo in properties)
                                 {
-                                    // [ML] - Get the alias for the property incase any child items are Archetypes
+                                    // [ML] - Default alias to property name, then potentilly get the value resolver alias, then override this with property attribute alias if available
 
                                     var alias = propertyInfo.Name;
-                                    var attribute = propertyInfo.GetCustomAttributes(typeof (ArchetypeValueResolverAttribute)).FirstOrDefault() as ArchetypeValueResolverAttribute;
+                                    var resolverAttribute = propertyInfo.GetCustomAttributes(typeof(ArchetypeValueResolverAttribute)).FirstOrDefault() as ArchetypeValueResolverAttribute;
+                                    var propertyAttribute = propertyInfo.GetCustomAttributes(typeof(ArchetypePropertyAttribute)).FirstOrDefault() as ArchetypePropertyAttribute;
 
-                                    if (!string.IsNullOrWhiteSpace(attribute?.Alias))
+                                    if (!string.IsNullOrWhiteSpace(resolverAttribute?.Alias))
                                     {
-                                        alias = attribute.Alias;
+                                        alias = resolverAttribute.Alias;
                                     }
 
-                                    // [ML] - Find any matching properties on the content
+                                    if (!string.IsNullOrWhiteSpace(propertyAttribute?.Alias))
+                                    {
+                                        alias = propertyAttribute.Alias;
+                                    }
+
+                                    // [ML] - Find any matching properties on the content from this alias
 
                                     var property = fieldset.Properties.FirstOrDefault(i => i.Alias.ToLower() == alias.ToLower());
 
@@ -197,9 +172,9 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
 
                                         var childArchetype = property.GetValue<ArchetypeModel>();
 
-                                        if (attribute != null && childArchetype != null)
+                                        if (resolverAttribute != null && childArchetype != null)
                                         {
-                                            propertyInfo.SetValue(instance, childArchetype.As(propertyInfo.PropertyType, culture, content, context));
+                                            propertyInfo.SetValue(instance, As(childArchetype, propertyInfo.PropertyType, culture, content, context));
                                         }
                                         else
                                         {
@@ -228,36 +203,6 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
         }
 
         /// <summary>
-        /// Returns the given instance of <see cref="ArchetypeModel"/> as the specified type.
-        /// </summary>
-        /// <param name="archetype">
-        /// The <see cref="ArchetypeModel"/> to convert.
-        /// </param>
-        /// <param name="content">
-        /// 
-        /// </param>
-        /// <param name="culture">
-        /// The <see cref="CultureInfo"/>
-        /// </param>
-        /// <param name="context"></param>
-        /// <typeparam name="T">
-        /// The <see cref="Type"/> of items to return.
-        /// </typeparam>
-        /// <returns>
-        /// The resolved <see cref="T"/>.
-        /// </returns>
-        public static T As<T>(
-            this ArchetypeModel archetype,
-            IPublishedContent content = null,
-            CultureInfo culture = null,
-            DittoValueResolverContext context = null)
-            where T : class
-        {
-            return As(archetype, typeof(T), culture, content, context) as T;
-        }
-
-
-        /// <summary>
         /// Returns an object representing the given <see cref="Type"/>.
         /// </summary>
         /// <param name="archetype">
@@ -276,8 +221,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
         /// <returns>
         /// The converted <see cref="Object"/> as the given type.
         /// </returns>
-        public static object As(
-            this ArchetypeModel archetype,
+        public object As(
+            ArchetypeModel archetype,
             Type type,
             CultureInfo culture = null,
             IPublishedContent content = null,
@@ -288,10 +233,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Extensions
                 return null;
             }
 
-            using (ApplicationContext.Current.ProfilingLogger.DebugDuration(type, string.Format("ArchetypeModel As ({0})", type.Name), "Complete"))
-            {
-                return GetTypedArchetype(archetype, type, culture, content, context);
-            }
+            return GetTypedArchetype(archetype, type, culture, content, context);
         }
     }
 }

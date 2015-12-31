@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Archetype.Models;
+using Newtonsoft.Json;
+using Our.Umbraco.Ditto.Resolvers.Tests.Fakes;
+using Umbraco.Core.Models;
+
+namespace Our.Umbraco.Ditto.Resolvers.Tests.Helpers
+{
+    public class ContentHelpers
+    {
+        public const string ArchetypeJson = @"{" +
+                                   "\"fieldsets\":[" +
+                                      "{" +
+                                         "\"properties\":[" +
+                                            "{" +
+                                               "\"alias\":\"summary\"," +
+                                               "\"value\":\"<p>This is the <strong>summary</strong> text.</p>\"" +
+                                            "}," +
+                                            "{" +
+                                               "\"alias\":\"header\"," +
+                                               "\"value\":\"Ready to Enroll?\"" +
+                                            "}," +
+                                            "{" +
+                                               "\"alias\":\"link\"," +
+                                               "\"value\":\"{}\"" +
+                                            "}" +
+                                         "]," +
+                                         "\"alias\":\"callout\"," +
+                                         "\"disabled\":false," +
+                                         "\"id\":\"7e02489f-c165-4d43-8b6b-9d8b80c3d488\"" +
+                                      "}" +
+                                   "]" +
+                                "}";
+
+        public static ArchetypeModel Archetype => JsonConvert.DeserializeObject<ArchetypeModel>(ArchetypeJson);
+
+        public static IPublishedContent FakeContent(int id, string name, IEnumerable<IPublishedContent> children = null, Collection<IPublishedProperty> properties = null, IPublishedContent parent = null)
+        {
+            return new FakePublishedContentModel(id, name, children ?? Enumerable.Empty<IPublishedContent>(), properties ?? new Collection<IPublishedProperty>(), parent);
+        }
+    }
+}

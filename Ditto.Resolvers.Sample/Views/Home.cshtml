@@ -1,4 +1,5 @@
 ﻿@using Ditto.Resolvers.Sample.Models.Archetypes
+@using Ditto.Resolvers.Sample.Models.Archetypes.Abstract
 @inherits Umbraco.Web.Mvc.UmbracoViewPage<Ditto.Resolvers.Sample.Models.ViewModel<Ditto.Resolvers.Sample.Models.DocTypes.Home>>
 @{
     ViewBag.PageTitle = "Home";
@@ -6,17 +7,45 @@
     Layout = "~/Views/Shared/Layouts/Root.cshtml";
 
     var priceList = Model.Content.PriceList ?? new List<PriceList>();
+    var multiList = Model.Content.Multi ?? new List<IMulti>();
 }
+<h1>Home</h1>
 
 <h2>@Model.Content.Title</h2>
 @Html.Raw(Model.Content.Body)
-<ul>
-    @foreach (var item in priceList.Where(i => !i.Disabled))
-    {
-        var url = item.AssociatedPage != null ? item.AssociatedPage.Url : "javascript:void(0);";
+@RenderPriceList(priceList)
 
-        <li> @item.Title @(!string.IsNullOrWhiteSpace(item.AnotherText) ? "(" + item.AnotherText + ")" : ""): @item.Quantity x @item.Title = @item.Price | <a href="@url">View</a></li>
+<h2>Multi</h2>
+<ul>
+    @foreach (var item in multiList.Where(i => !i.Disabled))
+    {
+        <li>
+            @if (item is RichTextWithHeader)
+            {
+                var richText = item as RichTextWithHeader;
+                <h3>@richText.Title</h3>
+                @Html.Raw(richText.Body)
+                @RenderPriceList(richText.PriceList)
+            }
+            @if (item is Number)
+            {
+                <h3>Number is: @(((Number)item).Main)</h3>
+            }
+        </li>
     }
 </ul>
 
+@helper RenderPriceList(IEnumerable<PriceList> priceLists)
+{
+    <ul>
+        @if (priceLists != null)
+        {
+            foreach (var item in priceLists.Where(i => !i.Disabled))
+            {
+                var url = item.AssociatedPage != null ? item.AssociatedPage.Url : "javascript:void(0);";
 
+                <li> @item.Title @(!string.IsNullOrWhiteSpace(item.AnotherText) ? "(" + item.AnotherText + ")" : ""): @item.Quantity x @item.Title = @item.Price | <a href="@url">View</a></li>
+            }
+        }
+    </ul>
+}

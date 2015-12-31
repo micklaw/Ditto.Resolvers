@@ -19,7 +19,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Tests.Fakes
         public FakePublishedProperty(string alias, object value, bool hasValue)
         {
             HasValue = hasValue;
-            Alias = alias;
+            Alias = PropertyTypeAlias = alias;
             Value = value;
         }
 
