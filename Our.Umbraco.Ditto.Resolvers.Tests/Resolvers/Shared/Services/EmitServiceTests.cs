@@ -4,19 +4,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using Archetype.Models;
 using NUnit.Framework;
-using Our.Umbraco.Ditto.Resolvers.Grid.Attributes;
-using Our.Umbraco.Ditto.Resolvers.Grid.Models;
+using Our.Umbraco.Ditto.Resolvers.Models.Grid;
+using Our.Umbraco.Ditto.Resolvers.Resolvers.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services;
-using Our.Umbraco.Ditto.Resolvers.Shared.Services.Abstract;
-using Rhino.Mocks;
 
-namespace Our.Umbraco.Ditto.Resolvers.Tests.Shared.Services
+namespace Our.Umbraco.Ditto.Resolvers.Tests.Resolvers.Shared.Services
 {
     public class Assignable
     {

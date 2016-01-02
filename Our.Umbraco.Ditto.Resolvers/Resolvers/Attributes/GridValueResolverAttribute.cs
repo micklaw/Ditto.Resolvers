@@ -1,9 +1,7 @@
 ﻿using System;
-using Our.Umbraco.Ditto.Resolvers.Grid.Models;
-using Our.Umbraco.Ditto.Resolvers.Grid.Resolvers;
-using Our.Umbraco.Ditto.Resolvers.Resolvers.Attributes;
+using Our.Umbraco.Ditto.Resolvers.Models.Grid;
 
-namespace Our.Umbraco.Ditto.Resolvers.Grid.Attributes
+namespace Our.Umbraco.Ditto.Resolvers.Resolvers.Attributes
 {
     public class GridValueResolverAttribute : AliasValueResolverAttribute
     {

@@ -6,12 +6,12 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Our.Umbraco.Ditto.Resolvers.Container;
 using Our.Umbraco.Ditto.Resolvers.Container.Abstract;
-using Our.Umbraco.Ditto.Resolvers.Grid.Models;
+using Our.Umbraco.Ditto.Resolvers.Models.Grid;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services.Abstract;
 using Umbraco.Core.Models;
 
-namespace Our.Umbraco.Ditto.Resolvers.Grid.Converters
+namespace Our.Umbraco.Ditto.Resolvers.Shared.Internal
 {
     internal class ControlConverter<T> : Newtonsoft.Json.Converters.CustomCreationConverter<Control> where T : Control
     {

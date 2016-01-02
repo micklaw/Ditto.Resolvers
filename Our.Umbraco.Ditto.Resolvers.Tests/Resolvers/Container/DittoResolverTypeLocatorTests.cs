@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using Our.Umbraco.Ditto.Resolvers.Container;
 using Our.Umbraco.Ditto.Resolvers.Container.Abstract;
 
-namespace Our.Umbraco.Ditto.Resolvers.Tests.Container
+namespace Our.Umbraco.Ditto.Resolvers.Tests.Resolvers.Container
 {
     [TestFixture]
     public class DittoResolverTypeLocatorTests

@@ -434,10 +434,6 @@
       <Project>{3b3839a7-8388-436a-92bc-e8a0b3488d7e}</Project>
       <Name>Our.Umbraco.Ditto.Resolvers.Archetype</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers.Grid\Our.Umbraco.Ditto.Resolvers.Grid.csproj">
-      <Project>{03dd3d84-9117-4c1d-9aa1-f0e028ebe387}</Project>
-      <Name>Our.Umbraco.Ditto.Resolvers.Grid</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.csproj">
       <Project>{a2dd3a98-c800-4aef-9176-b6fc58003b33}</Project>
       <Name>Our.Umbraco.Ditto.Resolvers</Name>

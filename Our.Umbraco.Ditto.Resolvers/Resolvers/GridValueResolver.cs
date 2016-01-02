@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
-using Our.Umbraco.Ditto.Resolvers.Grid.Attributes;
-using Our.Umbraco.Ditto.Resolvers.Grid.Converters;
-using Our.Umbraco.Ditto.Resolvers.Grid.Models;
+using Our.Umbraco.Ditto.Resolvers.Models.Grid;
+using Our.Umbraco.Ditto.Resolvers.Resolvers.Attributes;
+using Our.Umbraco.Ditto.Resolvers.Shared.Internal;
 using Umbraco.Core.Models;
 
-namespace Our.Umbraco.Ditto.Resolvers.Grid.Resolvers
+namespace Our.Umbraco.Ditto.Resolvers.Resolvers
 {
     public class GridValueResolver<T> : DittoValueResolver<DittoValueResolverContext, GridValueResolverAttribute> where T : Control
     {

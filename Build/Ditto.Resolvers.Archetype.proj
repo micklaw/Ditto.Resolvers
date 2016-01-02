@@ -111,7 +111,7 @@
   <!-- COMPILE -->
   <Target Name="Compile" DependsOnTargets="UpdateAssemblyInfo">
     <MSBuild Projects="$(ProjectDir)\Our.Umbraco.Ditto.Resolvers.Archetype.csproj" Properties="Configuration=$(BuildConfig)" />
-    <MSBuild Projects="$(ProjectDir)\Our.Umbraco.Ditto.Resolvers.Tests.csproj" Properties="Configuration=$(BuildConfig)" />
+    <MSBuild Projects="$(TestDir)\Our.Umbraco.Ditto.Resolvers.Tests.csproj" Properties="Configuration=$(BuildConfig)" />
   </Target>
 
   <!-- PREPARE FILES -->

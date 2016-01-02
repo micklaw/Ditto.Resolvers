@@ -1,4 +1,4 @@
-namespace Our.Umbraco.Ditto.Resolvers.Grid.Models
+namespace Our.Umbraco.Ditto.Resolvers.Models.Grid
 {
     public class Section
     {

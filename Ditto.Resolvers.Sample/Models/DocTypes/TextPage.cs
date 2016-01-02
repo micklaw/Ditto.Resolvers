@@ -1,9 +1,7 @@
 ﻿using System.Web;
 using Ditto.Resolvers.Sample.Models.DocTypes.Base;
 using Ditto.Resolvers.Sample.Models.Grid;
-using Our.Umbraco.Ditto.Resolvers.Grid.Attributes;
-using Our.Umbraco.Ditto.Resolvers.Grid.Models;
-using Our.Umbraco.Ditto.Resolvers.Grid.Resolvers;
+using Our.Umbraco.Ditto.Resolvers.Models.Grid;
 using Our.Umbraco.Ditto.Resolvers.Resolvers.Attributes;
 using Umbraco.Core.Models;
 
