@@ -1,4 +1,4 @@
-version: 0.2.4.{build}
+version: 0.2.5.{build}
 
 init:
   - set PACKAGE_PRERELEASE_SUFFIX=rtm
@@ -12,7 +12,7 @@ test:
 
 artifacts:
   - path: artifacts\*.nupkg
-  - path: artifacts\*.zip
+    name: nuget
 
 deploy:
     # GitHub Deployment for releases

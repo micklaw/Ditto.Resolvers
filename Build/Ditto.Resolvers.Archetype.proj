@@ -73,8 +73,8 @@
     <BuildConfig>Release</BuildConfig>
     <RootDir>$(MSBuildProjectDirectory)\..</RootDir>
     <BuildDir>$(MSBuildProjectDirectory)\_core\archetype</BuildDir>
+    <ArtifactsDir>$(MSBuildProjectDirectory)\artifacts</ArtifactsDir>
     <BuildNuGetDir>$(BuildDir)\_nuget\archetype</BuildNuGetDir>
-    <ArtifactsDir>$(RootDir)\artifacts</ArtifactsDir>
     <ProjectDir>$(RootDir)\Our.Umbraco.Ditto.Resolvers.Archetype</ProjectDir>
     <TestDir>$(RootDir)\Our.Umbraco.Ditto.Resolvers.Tests</TestDir>
   </PropertyGroup>
@@ -118,12 +118,10 @@
   <Target Name="PrepareFiles" DependsOnTargets="Compile">
     <ItemGroup>
       <BinFiles Include="$(ProjectDir)\bin\$(BuildConfig)\Our.Umbraco.Ditto.Resolvers*.dll" />
-      <SrcFiles Include="$(ProjectDir)\**\*.cs" Exclude="$(ProjectDir)\obj\**"/>
       <PackageFile Include="$(MSBuildProjectDirectory)\package.xml" />
       <NuSpecFile Include="$(MSBuildProjectDirectory)\archetype.nuspec" />
     </ItemGroup>
     <Copy SourceFiles="@(BinFiles)" DestinationFolder="$(BuildNuGetDir)\lib\net45" />
-    <Copy SourceFiles="@(SrcFiles)" DestinationFiles="@(SrcFiles->'$(BuildNuGetDir)\%(RecursiveDir)%(Filename)%(Extension)')" />
     <Copy SourceFiles="@(NuSpecFile)" DestinationFolder="$(BuildNuGetDir)" />
   </Target>
 
