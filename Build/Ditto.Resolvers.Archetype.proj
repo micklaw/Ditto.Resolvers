@@ -16,9 +16,9 @@
 
   <!-- SHARED PROPERTIES -->
   <PropertyGroup>
-	<Release>true</Release>
+	  <Release>true</Release>
     <PackageName>Ditto.Resolvers.Archetype</PackageName>
-    <MinUmbracoVersion>7.3.0-RC</MinUmbracoVersion>
+    <MinUmbracoVersion>7.3.0</MinUmbracoVersion>
     <Readme>Start using strongly typed Archetype Models in your Ditto POCOs</Readme>
     <AuthorName>Michael Law</AuthorName>
     <AuthorUrl>https://github.com/micklaw/Ditto.Resolvers/graphs/contributors</AuthorUrl>
@@ -30,7 +30,7 @@
   <!-- NUGET ONLY PROPERTIES -->
   <PropertyGroup>
     <PackageId>Ditto.Resolvers.Archetype</PackageId>
-    <Copyright>Copyright &#169; 2014 Michael Law Web Development Ltd</Copyright>
+    <Copyright>Copyright &#169; 2015 Michael Law Web Development Ltd</Copyright>
     <Owners>Michael Law Web Development Ltd</Owners>
     <IconUrl>https://upload.wikimedia.org/wikipedia/commons/6/6d/Beth_Ditto_IMG_5538.jpg</IconUrl>
     <Tags>umbraco poco mapping strongly-typed archetype</Tags>
@@ -43,7 +43,7 @@
     <FileVersion>$(APPVEYOR_BUILD_VERSION)</FileVersion>
   </PropertyGroup>
   <Choose>
-    <When Condition="$(APPVEYOR_BUILD_NUMBER) != '' And $(APPVEYOR_REPO_TAG) != 'true' ">
+    <When Condition="$(APPVEYOR_BUILD_NUMBER) != '' And $(APPVEYOR_REPO_TAG) != 'true'">
       <PropertyGroup>
         <Release>false</Release>
       </PropertyGroup>
@@ -76,6 +76,7 @@
     <BuildNuGetDir>$(BuildDir)\_nuget\archetype</BuildNuGetDir>
     <ArtifactsDir>$(RootDir)\artifacts</ArtifactsDir>
     <ProjectDir>$(RootDir)\Our.Umbraco.Ditto.Resolvers.Archetype</ProjectDir>
+    <TestDir>$(RootDir)\Our.Umbraco.Ditto.Resolvers.Tests</TestDir>
   </PropertyGroup>
 
   <!-- TARGETS -->
@@ -110,6 +111,7 @@
   <!-- COMPILE -->
   <Target Name="Compile" DependsOnTargets="UpdateAssemblyInfo">
     <MSBuild Projects="$(ProjectDir)\Our.Umbraco.Ditto.Resolvers.Archetype.csproj" Properties="Configuration=$(BuildConfig)" />
+    <MSBuild Projects="$(ProjectDir)\Our.Umbraco.Ditto.Resolvers.Tests.csproj" Properties="Configuration=$(BuildConfig)" />
   </Target>
 
   <!-- PREPARE FILES -->

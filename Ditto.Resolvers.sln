@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{02BF6D06
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
 		build-appveyor.cmd = build-appveyor.cmd
-		package.proj = package.proj
+		Build\package.proj = Build\package.proj
 		README.md = README.md
 	EndProjectSection
 EndProject
@@ -16,14 +16,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{0445B3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Archetype", "Archetype", "{D37D9313-A5F7-4AAA-BCBA-ED55F0748BF6}"
 	ProjectSection(SolutionItems) = preProject
-		archetype.nuspec = archetype.nuspec
-		Ditto.Resolvers.Archetype.proj = Ditto.Resolvers.Archetype.proj
+		Build\Ditto.Resolvers.Archetype.proj = Build\Ditto.Resolvers.Archetype.proj
+		Build\package.proj = Build\package.proj
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Grid", "Grid", "{F0D3E931-55F3-43D5-9BAB-B9F9564C663C}"
 	ProjectSection(SolutionItems) = preProject
-		Ditto.Resolvers.Grid.proj = Ditto.Resolvers.Grid.proj
-		grid.nuspec = grid.nuspec
+		Build\Ditto.Resolvers.Grid.proj = Build\Ditto.Resolvers.Grid.proj
+		Build\grid.nuspec = Build\grid.nuspec
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Our.Umbraco.Ditto.Resolvers", "Our.Umbraco.Ditto.Resolvers\Our.Umbraco.Ditto.Resolvers.csproj", "{A2DD3A98-C800-4AEF-9176-B6FC58003B33}"

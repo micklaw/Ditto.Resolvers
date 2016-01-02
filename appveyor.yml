@@ -8,11 +8,11 @@ build_script:
 
 test:
   assemblies:
-    - 'Our.Umbraco.Ditto.Resolvers.Tests.dll'
+    - '**\*Ditto.Resolvers.*Tests.dll'
 
 artifacts:
   - path: artifacts\*.nupkg
-    name: nuget
+  - path: artifacts\*.zip
 
 deploy:
     # GitHub Deployment for releases

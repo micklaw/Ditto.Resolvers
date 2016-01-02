@@ -3,8 +3,8 @@
 
 	<!-- TARGETS -->
 	<Target Name="BuildPackages">
-		<MSBuild Projects="$(MSBuildProjectDirectory)\Ditto.Resolvers.Archetype.proj" />
-    <MSBuild Projects="$(MSBuildProjectDirectory)\Ditto.Resolvers.Grid.proj" />
+		<MSBuild Projects="$(MSBuildProjectDirectory)\Build\Ditto.Resolvers.Archetype.proj" />
+    <MSBuild Projects="$(MSBuildProjectDirectory)\Build\Ditto.Resolvers.Grid.proj" />
 	</Target>
 
 </Project>
