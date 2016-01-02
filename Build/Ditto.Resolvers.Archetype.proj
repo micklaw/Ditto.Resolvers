@@ -71,7 +71,7 @@
   <!-- PATHS -->
   <PropertyGroup>
     <BuildConfig>Release</BuildConfig>
-    <RootDir>$(MSBuildProjectDirectory)</RootDir>
+    <RootDir>$(MSBuildProjectDirectory)\..</RootDir>
     <BuildDir>$(MSBuildProjectDirectory)\_core\archetype</BuildDir>
     <BuildNuGetDir>$(BuildDir)\_nuget\archetype</BuildNuGetDir>
     <ArtifactsDir>$(RootDir)\artifacts</ArtifactsDir>
