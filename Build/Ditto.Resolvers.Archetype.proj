@@ -90,6 +90,7 @@
   <!-- CLEAN -->
   <Target Name="Clean" DependsOnTargets="GetProductVersion">
     <RemoveDir Directories="$(BuildDir)" Condition="Exists('$(BuildDir)')" />
+    <RemoveDir Directories="$(BuildNuGetDir)" Condition="Exists('$(BuildNuGetDir)')" />
     <RemoveDir Directories="$(ArtifactsDir)" Condition="Exists('$(ArtifactsDir)')" />
     <MakeDir Directories="$(BuildDir)" />
     <MakeDir Directories="$(BuildNuGetDir)" />
