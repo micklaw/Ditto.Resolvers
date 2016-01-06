@@ -304,9 +304,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="unit-test-log4net.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Our.Umbraco.Ditto.Resolvers.Archetype\Our.Umbraco.Ditto.Resolvers.Archetype.csproj">
