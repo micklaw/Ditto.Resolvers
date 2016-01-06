@@ -19,6 +19,6 @@
 			<dependency id="UmbracoCms.Core" version="0.0.0" />
 			<dependency id="Our.Umbraco.Ditto" version="0.8.2" />
 			<dependency id="Archetype.Binaries" version="1.12.2" />
-		</dependencies>
+		</dependencies> 
 	</metadata>
 </package>
