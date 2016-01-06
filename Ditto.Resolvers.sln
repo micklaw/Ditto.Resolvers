@@ -16,6 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{0445B3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Archetype", "Archetype", "{D37D9313-A5F7-4AAA-BCBA-ED55F0748BF6}"
 	ProjectSection(SolutionItems) = preProject
+		Build\archetype.nuspec = Build\archetype.nuspec
 		Build\Ditto.Resolvers.Archetype.proj = Build\Ditto.Resolvers.Archetype.proj
 		Build\package.proj = Build\package.proj
 	EndProjectSection
