@@ -96,13 +96,13 @@ If you have enabled multiple fieldsets in your Archetype data type this would cr
 	}
 
 	[ArchetypeContent]
-	public class PriceList : ISomething, IFeildset
+	public class PriceList : ISomething, IFieldset
     {
 	...
 	}
 
 	[ArchetypeContent("potentiallySomeOtherArchetypeAlias")]
-	public class PriceListNew : ISomething, IFeildset
+	public class PriceListNew : ISomething, IFieldset
     {
 	...
 	}
@@ -121,7 +121,7 @@ If you have enabled multiple fieldsets in your Archetype data type this would cr
 Archetype has handy => Disabled and => Alias fields on its ArchetypeFieldsetModel, so if you implement the IFieldset interface on your POCO, these fields will be wired up :)
 
 ```csharp
-	public class PriceList : IFeildset
+	public class PriceList : IFieldset
     {
         public string Title { get; set; }
 
