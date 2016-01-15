@@ -11,6 +11,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
     /// </summary>
     public class DittoValueService : PropertyValueService
     {
+        private readonly Lazy<MethodInfo> _getResolvedValue = new Lazy<MethodInfo>(() => typeof(PublishedContentExtensions).GetMethod("GetResolvedValue", BindingFlags.NonPublic | BindingFlags.Static));
         private readonly Lazy<MethodInfo> _getTypedValue = new Lazy<MethodInfo>(() => typeof (PublishedContentExtensions).GetMethod("GetConvertedValue", BindingFlags.NonPublic | BindingFlags.Static));
 
         /// <summary>
@@ -25,13 +26,20 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
         /// <returns></returns>
         public override object Set(IPublishedContent content, CultureInfo culture, PropertyInfo propertyInfo, object propertyValue, object instance, DittoValueResolverContext context)
         {
+            object resolverValue = null;
+
+            var typedResolvedMethod = _getResolvedValue.Value;
+            if (typedResolvedMethod != null)
+            {
+                resolverValue = typedResolvedMethod.Invoke(this, new[] { content, culture, propertyInfo, instance, new [] { context }});
+            }
+
             object result = null;
 
-            var dynMethod = _getTypedValue.Value;
-
-            if (dynMethod != null)
+            var typedValueMethod = _getTypedValue.Value;
+            if (typedValueMethod != null)
             {
-                result = dynMethod.Invoke(this, new [] { content, culture, propertyInfo, propertyValue, instance });
+                result = typedValueMethod.Invoke(this, new [] { content, culture, propertyInfo, resolverValue ?? propertyValue, instance });
             }
 
             return result;

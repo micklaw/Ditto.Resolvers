@@ -140,6 +140,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
                             {
                                 instanceType.GetProperty("Disabled").SetValue(instance, fieldset.Disabled);
                                 instanceType.GetProperty("Alias").SetValue(instance, fieldset.Alias);
+
+                                properties = properties?.Where(i => !(new[] { "alias", "disabled" }.Contains(i.Name.ToLower()))).ToArray();
                             }
 
                             if (properties != null)
@@ -149,8 +151,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
                                     // [ML] - Default alias to property name, then potentilly get the value resolver alias, then override this with property attribute alias if available
 
                                     var alias = propertyInfo.Name;
-                                    var resolverAttribute = propertyInfo.GetCustomAttributes(typeof(ArchetypeValueResolverAttribute)).FirstOrDefault() as ArchetypeValueResolverAttribute;
-                                    var propertyAttribute = propertyInfo.GetCustomAttributes(typeof(ArchetypePropertyAttribute)).FirstOrDefault() as ArchetypePropertyAttribute;
+                                    var resolverAttribute = propertyInfo.GetCustomAttributes(typeof (ArchetypeValueResolverAttribute)).FirstOrDefault() as ArchetypeValueResolverAttribute;
+                                    var propertyAttribute =propertyInfo.GetCustomAttributes(typeof (ArchetypePropertyAttribute)).FirstOrDefault() as ArchetypePropertyAttribute;
 
                                     if (!string.IsNullOrWhiteSpace(resolverAttribute?.Alias))
                                     {
@@ -166,20 +168,17 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
 
                                     var property = fieldset.Properties.FirstOrDefault(i => i.Alias.ToLower() == alias.ToLower());
 
-                                    if (property != null)
+                                    // [ML] - If this is expecting an archetype, then kick off this process again
+
+                                    var childArchetype = property?.GetValue<ArchetypeModel>();
+
+                                    if (resolverAttribute != null && childArchetype != null)
                                     {
-                                        // [ML] - If this is expecting an archetype, then kick off this process again
-
-                                        var childArchetype = property.GetValue<ArchetypeModel>();
-
-                                        if (resolverAttribute != null && childArchetype != null)
-                                        {
-                                            propertyInfo.SetValue(instance, As(childArchetype, propertyInfo.PropertyType, culture, content, context));
-                                        }
-                                        else
-                                        {
-                                            propertyInfo.SetValue(instance, service.Set(content, culture, propertyInfo, property.Value, instance, context));
-                                        }
+                                        propertyInfo.SetValue(instance, As(childArchetype, propertyInfo.PropertyType, culture, content, context));
+                                    }
+                                    else
+                                    {
+                                        propertyInfo.SetValue(instance, service.Set(content, culture, propertyInfo, property?.Value, instance, context));
                                     }
                                 }
 
