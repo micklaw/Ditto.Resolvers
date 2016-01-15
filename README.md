@@ -224,7 +224,7 @@ The classes below are the containers for the control and its descriptive editor 
 
 #### TypeConverters
 
-So if you're familiar with how Ditto works or even familiar with the **TypeConverter** class in .Net at all, then this will seem straight forward to you. You basically create a class which for a given value of a specific type, will return an object of your choosing. So the idea here is that you create (or reuse) your existing **TypeConverters** to bind the types returned via the Grid to strong types. I'm not going to show you a **TypeConverter** here as I'm sure if you dig around Ditto for 5 minutes there will be loads of examples. In fact, here's [how you do a TypeConverter](http://umbraco-ditto.readthedocs.org/en/latest/usage/#advanced-usage-type-converters), don't say I'm not good to you.
+So if you're familiar with how Ditto works or even familiar with the **TypeConverter** class in .Net at all, then this will seem straight forward to you. You basically create a class which for a given value of a specific type, will return an object of your choosing. So the idea here is that you create (or reuse) your existing **TypeConverters** to bind the types returned via the Grid to strong types. I'm not going to show you a **TypeConverter** here as I'm sure if you dig around Ditto for 5 minutes there will be loads of examples. In fact, here's [how you do a TypeConverter](http://umbraco-ditto.readthedocs.org/en/latest/usage-advanced-typeconverters/), don't say I'm not good to you.
 
 #### TypeConverterLocator
 
