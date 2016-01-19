@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Web;
-using Archetype.Models;
+using Ditto.Resolvers.Sample.Models.Archetypes.Abstract;
 using Ditto.Resolvers.Sample.Models.Custom;
 using Ditto.Resolvers.Sample.Models.Ditto.ValueResolvers;
 using Ditto.Resolvers.Sample.Models.DocTypes.Base;
@@ -13,7 +11,8 @@ using Our.Umbraco.Ditto.Resolvers.Archetype.Models.Abstract;
 
 namespace Ditto.Resolvers.Sample.Models.Archetypes
 {
-    public class PriceList : IFieldset
+    [ArchetypeContent(alias: "priceList")]
+    public class PriceList : IWidget, IFieldset
     {
         public string Title { get; set; }
 
@@ -21,7 +20,7 @@ namespace Ditto.Resolvers.Sample.Models.Archetypes
 
         public string Price { get; set; }
 
-        [TypeConverter(typeof(DittoContentPickerConverter))]
+        [TypeConverter(typeof(DittoPickerConverter))]
         public Content AssociatedPage { get; set; }
 
         public string Alias { get; set; }

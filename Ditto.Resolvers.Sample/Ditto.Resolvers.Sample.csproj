@@ -175,9 +175,9 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Our.Umbraco.Ditto, Version=0.8.5738.28308, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Our.Umbraco.Ditto.0.8.2\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
+    <Reference Include="Our.Umbraco.Ditto, Version=0.8.5820.30428, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Our.Umbraco.Ditto.0.8.4\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Our.Umbraco.DocTypeGridEditor">
       <HintPath>..\Dependencies\Our.Umbraco.DocTypeGridEditor.dll</HintPath>
@@ -328,22 +328,18 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Archetypes\Abstract\IMulti.cs" />
+    <Compile Include="Models\Archetypes\Abstract\IWidget.cs" />
     <Compile Include="Models\Archetypes\Number.cs" />
     <Compile Include="Models\Archetypes\RichTextWithHeader.cs" />
     <Compile Include="Models\Archetypes\PriceList.cs" />
     <Compile Include="Models\Custom\GabeHCould.cs" />
-    <Compile Include="Models\Ditto\TypeConverters\GridImageConverter.cs" />
     <Compile Include="Models\Ditto\ValueResolvers\GabeHCoudResolvers.cs" />
     <Compile Include="Models\DocTypes\Base\Content.cs" />
-    <Compile Include="Models\DocTypes\Base\Grid.cs" />
     <Compile Include="Models\DocTypes\Base\Page.cs" />
-    <Compile Include="Models\DocTypes\Composition\TestClass.cs" />
-    <Compile Include="Models\DocTypes\Grid\GridTitle.cs" />
+    <Compile Include="Models\DocTypes\TypicalPage.cs" />
+    <Compile Include="Models\DocTypes\Composition\Typical.cs" />
     <Compile Include="Models\DocTypes\TextPage.cs" />
     <Compile Include="Models\DocTypes\Home.cs" />
-    <Compile Include="Models\Grid\CustomControl.cs" />
-    <Compile Include="Models\Grid\Focalpoint.cs" />
-    <Compile Include="Models\Grid\Image.cs" />
     <Compile Include="Models\ViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

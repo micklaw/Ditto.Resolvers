@@ -5,16 +5,14 @@ using System.Reflection;
 using System.Web;
 using Archetype.Models;
 using Moq;
-using Newtonsoft.Json;
 using NUnit.Framework;
-using Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Services;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Services.Abstract;
 using Our.Umbraco.Ditto.Resolvers.Container;
 using Our.Umbraco.Ditto.Resolvers.Shared.Services.Abstract;
 using Our.Umbraco.Ditto.Resolvers.Tests.Archetype.Models.Archetype;
-using Our.Umbraco.Ditto.Resolvers.Tests.Archetype.Models.Ditto;
 using Our.Umbraco.Ditto.Resolvers.Tests.Fakes;
+using Our.Umbraco.Ditto.Resolvers.Tests.Fakes.Ditto;
 using Our.Umbraco.Ditto.Resolvers.Tests.Helpers;
 using Umbraco.Core.Models;
 

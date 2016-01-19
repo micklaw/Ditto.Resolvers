@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Our.Umbraco.Ditto.Resolvers.Resolvers;
+﻿using Our.Umbraco.Ditto.Resolvers.Resolvers;
 using Umbraco.Core.Models;
 
 namespace Our.Umbraco.Ditto.Resolvers.Tests.Fakes

@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Ditto.Resolvers.Sample.Models;
 using Ditto.Resolvers.Sample.Models.DocTypes;
 using Our.Umbraco.Ditto;
 using Umbraco.Web.Models;
 using Umbraco.Web.Mvc;
-using Ditto.Resolvers.Sample.Models.DocTypes.Composition;
 
 namespace Ditto.Resolvers.Sample.Controllers
 {
@@ -21,9 +16,7 @@ namespace Ditto.Resolvers.Sample.Controllers
                 Content = model.As<Home>()
             };
 
-            var poco = model.As<TestClass>();
-
-            viewModel.Content = poco.Homepage;
+            var poco = model.As<TypicalPage>();
 
             return CurrentTemplate(viewModel);
         }

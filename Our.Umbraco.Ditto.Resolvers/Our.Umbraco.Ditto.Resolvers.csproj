@@ -145,8 +145,9 @@
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Our.Umbraco.Ditto">
-      <HintPath>..\packages\Our.Umbraco.Ditto.0.8.2\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
+    <Reference Include="Our.Umbraco.Ditto, Version=0.8.5820.30428, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Our.Umbraco.Ditto.0.8.4\lib\net45\Our.Umbraco.Ditto.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -262,29 +263,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Container\Abstract\IAliasLocator.cs" />
-    <Compile Include="Container\Abstract\IResolverLocator.cs" />
     <Compile Include="Container\DittoAliasLocator.cs" />
-    <Compile Include="Container\DittoResolverTypeLocator.cs" />
-    <Compile Include="Models\Grid\Area.cs" />
-    <Compile Include="Models\Grid\Control.cs" />
-    <Compile Include="Models\Grid\Editor.cs" />
-    <Compile Include="Models\Grid\GridModel.cs" />
-    <Compile Include="Models\Grid\Row.cs" />
-    <Compile Include="Models\Grid\Section.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resolvers\Attributes\AliasValueResolverAttribute.cs" />
-    <Compile Include="Resolvers\Attributes\GridValueResolverAttribute.cs" />
     <Compile Include="Resolvers\ChildContentValueResolver.cs" />
     <Compile Include="Resolvers\GridHtmlValueResolver.cs" />
     <Compile Include="Resolvers\Attributes\GridHtmlValueResolverAttribute.cs" />
-    <Compile Include="Resolvers\GridValueResolver.cs" />
     <Compile Include="Resolvers\ParentContentValueResolver.cs" />
-    <Compile Include="Shared\Internal\ControlConverter.cs" />
     <Compile Include="Shared\Internal\TypeHelper.cs" />
     <Compile Include="Shared\Services\Abstract\PropertyValueService.cs" />
-    <Compile Include="Shared\Services\DittoEmitterService.cs" />
     <Compile Include="Shared\Services\DittoValueService.cs" />
-    <Compile Include="Shared\Services\Abstract\EmitterService.cs" />
     <Compile Include="Utils\PreConditions.cs" />
   </ItemGroup>
   <ItemGroup>

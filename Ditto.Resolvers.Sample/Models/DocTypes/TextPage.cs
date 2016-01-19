@@ -1,8 +1,5 @@
 ﻿using System.Web;
 using Ditto.Resolvers.Sample.Models.DocTypes.Base;
-using Ditto.Resolvers.Sample.Models.Grid;
-using Our.Umbraco.Ditto.Resolvers.Models.Grid;
-using Our.Umbraco.Ditto.Resolvers.Resolvers.Attributes;
 using Umbraco.Core.Models;
 
 namespace Ditto.Resolvers.Sample.Models.DocTypes
@@ -16,8 +13,5 @@ namespace Ditto.Resolvers.Sample.Models.DocTypes
         public string Title { get; set; }
 
         public HtmlString Body { get; set; }
-
-        [GridValueResolver]
-        public GridModel Grid { get; set; }
     }
 }

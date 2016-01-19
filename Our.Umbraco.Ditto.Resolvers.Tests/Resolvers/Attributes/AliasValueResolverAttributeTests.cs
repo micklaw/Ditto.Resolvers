@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
-using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers;
 using Our.Umbraco.Ditto.Resolvers.Resolvers.Attributes;
 

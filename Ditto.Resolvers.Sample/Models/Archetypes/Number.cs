@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Web;
-using Archetype.Models;
-using Ditto.Resolvers.Sample.Models.Archetypes.Abstract;
-using Ditto.Resolvers.Sample.Models.DocTypes.Base;
-using Our.Umbraco.Ditto;
+﻿using Ditto.Resolvers.Sample.Models.Archetypes.Abstract;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Models.Abstract;
 
