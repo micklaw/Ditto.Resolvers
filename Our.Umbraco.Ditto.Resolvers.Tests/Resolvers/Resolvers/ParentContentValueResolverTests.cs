@@ -28,7 +28,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Tests.Resolvers.Resolvers
 
             _content = new FakeModel(content);
 
-            _propertyDescriptor = TypeDescriptor.GetProperties(_content)["TextString"];
+            _propertyDescriptor = TypeDescriptor.GetProperties(_content)["Callout"];
             _context = new FakeDittoValueResolverContext(_content, _propertyDescriptor);
         }
 

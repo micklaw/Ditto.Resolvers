@@ -115,6 +115,11 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
 
                         if (instanceType == null)
                         {
+                            if (propertyType.IsAbstract)
+                            {
+                                throw new InvalidCastException($"Property of type ({propertyType.Name}) is abstract, you may be missing an ArchetypeContentAttribute to describe you POCO.");
+                            }
+
                             instanceType = propertyType;
                         }
 
