@@ -33,7 +33,24 @@ namespace Ditto.Resolvers.Sample.Models.Archetypes
 
         public string TestStringField { get; set; }
 
+        IEnumerable<GabeHCoud> _persons { get; set; }
+
         [DittoValueResolver(typeof(GabeHCoudResolvers))]
-        public IEnumerable<GabeHCoud> Persons { get; set; } 
+        public IEnumerable<GabeHCoud> Persons
+        {
+            get
+            {
+                return _persons ?? new List<GabeHCoud>();
+            }
+            set
+            {
+                if (value == null)
+                {
+                    value = new List<GabeHCoud>();
+                }
+
+                _persons = value.Take(1).ToList();
+            }
+        }
     }
 }
