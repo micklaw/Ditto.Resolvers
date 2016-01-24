@@ -68,6 +68,13 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers
                 {
                     return _bindingService.As(archetype, descriptor.PropertyType, Culture, content, Context);
                 }
+                else
+                {
+                    if (property != null && property.HasValue)
+                    {
+                        throw new InvalidOperationException($"Property '{alias}' on {content.Name} ({content.Id} doesnt apear to be an Archetype");
+                    }
+                }
             }
 
             return null;
