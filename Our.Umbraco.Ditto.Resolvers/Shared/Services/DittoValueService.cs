@@ -26,20 +26,38 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
         /// <returns></returns>
         public override object Set(IPublishedContent content, CultureInfo culture, PropertyInfo propertyInfo, object propertyValue, object instance, DittoValueResolverContext context)
         {
-            object resolverValue = null;
-
-            var typedResolvedMethod = _getResolvedValue.Value;
-            if (typedResolvedMethod != null)
-            {
-                resolverValue = typedResolvedMethod.Invoke(this, new[] { content, culture, propertyInfo, instance, new [] { context }});
-            }
-
             object result = null;
 
-            var typedValueMethod = _getTypedValue.Value;
-            if (typedValueMethod != null)
+            try
             {
-                result = typedValueMethod.Invoke(this, new [] { content, culture, propertyInfo, resolverValue ?? propertyValue, instance });
+                // ML - If this is a non Archetype but has an archetype resolver attribute, then ignore it
+
+                object resolverValue = null;
+
+                var typedResolvedMethod = _getResolvedValue.Value;
+                if (typedResolvedMethod != null)
+                {
+                    resolverValue = typedResolvedMethod.Invoke(this,
+                        new[] {content, culture, propertyInfo, instance, new[] {context}});
+                }
+
+                var typedValueMethod = _getTypedValue.Value;
+                if (typedValueMethod != null)
+                {
+                    result = typedValueMethod.Invoke(this,
+                        new[] {content, culture, propertyInfo, resolverValue ?? propertyValue, instance});
+                }
+            }
+            catch (Exception exception)
+            {
+                // ML - Throw a more specific exception if possible
+
+                if (exception.InnerException != null)
+                {
+                    throw exception.InnerException;
+                }
+
+                throw;
             }
 
             return result;

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using Archetype.Models;
 using Our.Umbraco.Ditto.Resolvers.Archetype.Attributes;
@@ -49,7 +50,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers
                 {
                     alias = Attribute.Alias;
                 }
-                
+
                 var propertyAttribute = descriptor.Attributes.OfType<ArchetypePropertyAttribute>().FirstOrDefault();
 
                 if (!string.IsNullOrWhiteSpace(propertyAttribute?.Alias))
@@ -61,14 +62,11 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers
 
                 // [ML] - If the property has an alias and its of ArchetypeModel, then do some shizzle
 
-                if (property.HasValue)
-                {
-                    var archetype = property.Value as ArchetypeModel;
+                var archetype = property != null && property.HasValue ? property.Value as ArchetypeModel : null;
 
-                    if (archetype != null)
-                    {
-                        return _bindingService.As(archetype, descriptor.PropertyType, Culture, content, Context);
-                    }
+                if (archetype != null)
+                {
+                    return _bindingService.As(archetype, descriptor.PropertyType, Culture, content, Context);
                 }
             }
 

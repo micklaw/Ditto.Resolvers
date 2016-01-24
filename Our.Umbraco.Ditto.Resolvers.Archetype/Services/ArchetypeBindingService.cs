@@ -182,7 +182,14 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
                                     }
                                     else
                                     {
-                                        propertyInfo.SetValue(instance, service.Set(content, culture, propertyInfo, property?.Value, instance, context));
+                                        if (resolverAttribute == null)
+                                        {
+                                            propertyInfo.SetValue(instance, service.Set(content, culture, propertyInfo, property?.Value, instance, context));
+                                        }
+                                        else
+                                        {
+                                            throw new InvalidOperationException($"Property '{alias}' on type '{instanceType.Name}' has an ArchetypeValueResolverAttribute but does the not appear to be an Archetype in the generated JSON.");
+                                        }
                                     }
                                 }
 
