@@ -150,6 +150,15 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
 
                             if (properties != null)
                             {
+                                var conversionCtx = new DittoConversionHandlerContext
+                                {
+                                    Content = content,
+                                    ModelType = instanceType,
+                                    Model = instance
+                                };
+
+                                OnConvert<DittoOnConvertingAttribute>(instanceType, instance, conversionCtx);
+
                                 foreach (var propertyInfo in properties)
                                 {
                                     // [ML] - Default alias to property name, then potentilly get the value resolver alias, then override this with property attribute alias if available
@@ -197,8 +206,12 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
 
                                 if (!isGenericList)
                                 {
+                                    OnConvert<DittoOnConvertedAttribute>(instanceType, instance, conversionCtx);
+
                                     return instance;
                                 }
+
+                                OnConvert<DittoOnConvertedAttribute>(instanceType, instance, conversionCtx);
 
                                 list.Add(instance);
                             }
@@ -210,6 +223,24 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// On Converting Do some stuff
+        /// </summary>
+        /// <param name="instanceType"></param>
+        /// <param name="instance"></param>
+        /// <param name="context"></param>
+        public void OnConvert<T>(Type instanceType, object instance, DittoConversionHandlerContext context) where T : Attribute
+        {
+            foreach (var method in instanceType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.GetCustomAttribute<T>() != null))
+            {
+                var p = method.GetParameters();
+                if (p.Length == 1 && p[0].ParameterType == typeof(DittoConversionHandlerContext))
+                {
+                    method.Invoke(instance, new object[] { context });
+                }
+            }
         }
 
         /// <summary>
