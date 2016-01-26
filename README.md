@@ -67,7 +67,7 @@ You can use a **ArchetypePropertyAttribute** if a property on your Archetype cla
     {
         ...
 
-        [ArchetypePropertyAttribute("randomAlias")]
+        [ArchetypeProperty("randomAlias")]
         public string Price { get; set; }
     }
 ```
@@ -138,6 +138,37 @@ Archetype has handy => Disabled and => Alias fields on its ArchetypeFieldsetMode
     }
 ```
 
+#### Ditto Events
+
+You can also fire on converted or converting methods on your POCO using **DittoOnConvertingAttribute** or **DittoOnConvertedAttribute** attributes.
+
+```csharp
+	[ArchetypeContent]
+    public class PriceList
+    {
+        public string Title { get; set; }
+
+        public int Quantity { get; set; }
+
+        public string Price { get; set; }
+
+        [TypeConverter(typeof(DittoContentPickerConverter))]
+        public Content AssociatedPage { get; set; }
+
+        [DittoOnConverting]
+        internal void OnConverting(DittoConversionHandlerContext context)
+        {
+            var x = context;
+        }
+
+        [DittoOnConverted]
+        internal void OnConverted(DittoConversionHandlerContext context)
+        {
+            var x = context;
+        }
+    }
+```
+
 #### Nested Archetypes
 
 Rejoice. Nested Archetypes should also work so long as you have decorated the child Archetype property on your POCO with the **ArchetypeResolverAttribute**.
@@ -154,8 +185,11 @@ Rejoice. Nested Archetypes should also work so long as you have decorated the ch
         [TypeConverter(typeof(DittoContentPickerConverter))]
         public Content AssociatedPage { get; set; }
         
-		[ArchetypeContent("overrideAliasCheck")]
+		[ArchetypeProperty("overrideAliasCheck")]
         [ArchetypeValueResolver("overridenByArchetypeContentAttributeAbove")]
 		public List<UrlPicker> Links { get; set; }
+
+		[ArchetypeValueResolver]
+		public SomeOtherPOCO NewProperty { get; set; }
     }
 ```
