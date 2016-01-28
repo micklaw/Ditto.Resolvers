@@ -37,15 +37,13 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
                 var typedResolvedMethod = _getResolvedValue.Value;
                 if (typedResolvedMethod != null)
                 {
-                    resolverValue = typedResolvedMethod.Invoke(this,
-                        new[] {content, culture, propertyInfo, instance, new[] {context}});
+                    resolverValue = typedResolvedMethod.Invoke(this, new[] {content, culture, propertyInfo, instance, new[] {context}});
                 }
 
                 var typedValueMethod = _getTypedValue.Value;
                 if (typedValueMethod != null)
                 {
-                    result = typedValueMethod.Invoke(this,
-                        new[] {content, culture, propertyInfo, resolverValue ?? propertyValue, instance});
+                    result = typedValueMethod.Invoke(this, new[] {content, culture, propertyInfo, resolverValue ?? propertyValue, instance});
                 }
             }
             catch (Exception exception)

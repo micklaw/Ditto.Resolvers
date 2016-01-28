@@ -140,13 +140,26 @@ Archetype has handy => Disabled and => Alias fields on its ArchetypeFieldsetMode
 
 #### Ditto Events
 
-You can also fire on converted or converting methods on your POCO using **DittoOnConvertingAttribute** or **DittoOnConvertedAttribute** attributes.
+You can also fire on converted or converting methods on your POCO using **DittoOnConvertingAttribute** or **DittoOnConvertedAttribute** attributes. If that isn't granular enough,
+why not fire them at a property level using the **ArchetypeOnPropertyConvertingAttribute** or the **ArchetypeOnPropertyConvertedAttribute** attributes.
 
 ```csharp
 	[ArchetypeContent]
     public class PriceList
     {
         public string Title { get; set; }
+
+		[ArchetypeOnPropertyConverting(nameof(Title))]
+        private void MainOnConverting(DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset)
+        {
+            var x = context;
+        }
+
+        [ArchetypeOnPropertyConverted(nameof(Title))]
+        private void MainOnConverted(DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset)
+        {
+            var x = context;
+        }
 
         public int Quantity { get; set; }
 

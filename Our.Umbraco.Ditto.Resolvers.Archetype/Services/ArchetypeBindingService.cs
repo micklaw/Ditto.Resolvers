@@ -157,7 +157,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
                                     Model = instance
                                 };
 
-                                OnConvert<DittoOnConvertingAttribute>(instanceType, instance, conversionCtx);
+                                OnConvert<DittoOnConvertingAttribute>(instanceType, instance, conversionCtx, fieldset, null);
 
                                 foreach (var propertyInfo in properties)
                                 {
@@ -185,6 +185,8 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
 
                                     var childArchetype = property?.GetValue<ArchetypeModel>();
 
+                                    OnConvert<ArchetypeOnPropertyConvertingAttribute>(instanceType, instance, conversionCtx, fieldset, propertyInfo.Name);
+
                                     if (resolverAttribute != null && childArchetype != null)
                                     {
                                         propertyInfo.SetValue(instance, As(childArchetype, propertyInfo.PropertyType, culture, content, context));
@@ -200,18 +202,20 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
                                             throw new InvalidOperationException($"Property '{alias}' on type '{instanceType.Name}' has an ArchetypeValueResolverAttribute but does the not appear to be an Archetype in the generated JSON.");
                                         }
                                     }
+
+                                    OnConvert<ArchetypeOnPropertyConvertedAttribute>(instanceType, instance, conversionCtx, fieldset,propertyInfo.Name);
                                 }
 
                                 // [ML] - If this is not a generic type, then return the first item
 
                                 if (!isGenericList)
                                 {
-                                    OnConvert<DittoOnConvertedAttribute>(instanceType, instance, conversionCtx);
+                                    OnConvert<DittoOnConvertedAttribute>(instanceType, instance, conversionCtx, fieldset, null);
 
                                     return instance;
                                 }
 
-                                OnConvert<DittoOnConvertedAttribute>(instanceType, instance, conversionCtx);
+                                OnConvert<DittoOnConvertedAttribute>(instanceType, instance, conversionCtx, fieldset, null);
 
                                 list.Add(instance);
                             }
@@ -224,6 +228,23 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
 
             return null;
         }
+        
+        /// <summary>
+        /// Invoke the found method
+        /// </summary>
+        /// <param name="method"></param>
+        /// <param name="instance"></param>
+        /// <param name="context"></param>
+        /// <param name="fieldset"></param>
+        private void InvokeConvert(MethodInfo method, object instance, DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset)
+        {
+            var p = method.GetParameters();
+
+            if (p.Length == 2 && p[0].ParameterType == typeof(DittoConversionHandlerContext) && p[1].ParameterType == typeof(ArchetypeFieldsetModel))
+            {
+                method.Invoke(instance, new object[] { context, fieldset });
+            }
+        }
 
         /// <summary>
         /// On Converting Do some stuff
@@ -231,15 +252,20 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
         /// <param name="instanceType"></param>
         /// <param name="instance"></param>
         /// <param name="context"></param>
-        public void OnConvert<T>(Type instanceType, object instance, DittoConversionHandlerContext context) where T : Attribute
+        private void OnConvert<T>(Type instanceType, object instance, DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset, string propertyName) where T : Attribute
         {
-            foreach (var method in instanceType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(x => x.GetCustomAttribute<T>() != null))
+            Func<MethodInfo, bool> predicate = x => x.GetCustomAttribute<T>() != null;
+
+            if (!typeof(IPropertyName).IsAssignableFrom(typeof(T)))
             {
-                var p = method.GetParameters();
-                if (p.Length == 1 && p[0].ParameterType == typeof(DittoConversionHandlerContext))
-                {
-                    method.Invoke(instance, new object[] { context });
-                }
+                predicate = x => x.GetCustomAttributes<T>().OfType<IPropertyName>().Where(i => i.PropertyName == propertyName) != null;
+            }
+                
+            var method = instanceType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(predicate).FirstOrDefault();
+
+            if (method != null)
+            {
+                InvokeConvert(method, instance, context, fieldset);
             }
         }
 

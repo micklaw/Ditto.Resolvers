@@ -258,9 +258,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ArchetypeOnPropertyConvertedAttribute.cs" />
+    <Compile Include="Attributes\ArchetypeOnPropertyConvertingAttribute.cs" />
     <Compile Include="Attributes\ArchetypePropertyAttribute..cs" />
     <Compile Include="Attributes\ArchetypeContentAttribute.cs" />
     <Compile Include="Attributes\ArchetypeValueResolverAttribute.cs" />
+    <Compile Include="Attributes\Abstract\IPropertyName.cs" />
     <Compile Include="Services\Abstract\IArchetypeBindingService.cs" />
     <Compile Include="Utils\ArchetypeCache.cs" />
     <Compile Include="Services\ArchetypeBindingService.cs" />
