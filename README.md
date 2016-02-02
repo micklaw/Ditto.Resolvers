@@ -169,13 +169,13 @@ why not fire them at a property level using the **ArchetypeOnPropertyConvertingA
         public Content AssociatedPage { get; set; }
 
         [DittoOnConverting]
-        internal void OnConverting(DittoConversionHandlerContext context)
+        internal void OnConverting(DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset)
         {
             var x = context;
         }
 
         [DittoOnConverted]
-        internal void OnConverted(DittoConversionHandlerContext context)
+        internal void OnConverted(DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset)
         {
             var x = context;
         }
