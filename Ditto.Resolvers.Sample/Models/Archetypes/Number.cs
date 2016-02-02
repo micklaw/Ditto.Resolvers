@@ -12,13 +12,13 @@ namespace Ditto.Resolvers.Sample.Models.Archetypes
         public int Main { get; set; }
 
         [ArchetypeOnPropertyConverting(nameof(Main))]
-        private void MainOnConverting(DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset)
+        internal void MainOnConverting(DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset)
         {
             var x = context;
         }
 
         [ArchetypeOnPropertyConverted(nameof(Main))]
-        private void MainOnConverted(DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset)
+        internal void MainOnConverted(DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset)
         {
             var x = context;
         }

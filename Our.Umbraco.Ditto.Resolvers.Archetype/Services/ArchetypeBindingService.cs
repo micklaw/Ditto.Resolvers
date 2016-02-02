@@ -252,13 +252,15 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
         /// <param name="instanceType"></param>
         /// <param name="instance"></param>
         /// <param name="context"></param>
+        /// <param name="fieldset"></param>
+        /// <param name="propertyName"></param>
         private void OnConvert<T>(Type instanceType, object instance, DittoConversionHandlerContext context, ArchetypeFieldsetModel fieldset, string propertyName) where T : Attribute
         {
             Func<MethodInfo, bool> predicate = x => x.GetCustomAttribute<T>() != null;
 
-            if (!typeof(IPropertyName).IsAssignableFrom(typeof(T)))
+            if (typeof(IPropertyName).IsAssignableFrom(typeof(T)))
             {
-                predicate = x => x.GetCustomAttributes<T>().OfType<IPropertyName>().Where(i => i.PropertyName == propertyName) != null;
+                predicate = x => x.GetCustomAttributes<T>().OfType<IPropertyName>().Count(i => i.PropertyName == propertyName) > 0;
             }
                 
             var method = instanceType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance).Where(predicate).FirstOrDefault();
