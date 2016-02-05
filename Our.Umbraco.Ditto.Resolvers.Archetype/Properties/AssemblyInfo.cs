@@ -16,10 +16,10 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfigurationAttribute("")]
 [assembly: AssemblyCompanyAttribute("MLWD")]
 [assembly: AssemblyProductAttribute("Our.Umbraco.Ditto.Resolvers.Archetype")]
-[assembly: AssemblyCopyrightAttribute("Copyright (c) MLWD 2015")]
+[assembly: AssemblyCopyrightAttribute("Copyright (c) MLWD 2016")]
 [assembly: AssemblyTrademarkAttribute("")]
 [assembly: AssemblyCultureAttribute("")]
 [assembly: ComVisibleAttribute(false)]
-[assembly: AssemblyVersionAttribute("1.0.3")]
-[assembly: AssemblyFileVersionAttribute("1.0.3")]
+[assembly: AssemblyVersionAttribute("1.0.4")]
+[assembly: AssemblyFileVersionAttribute("1.0.4")]
 
