@@ -1,7 +1,7 @@
-version: 1.0.4.{build}
+version: 1.0.5.{build}
 
 init:
-  - set PACKAGE_PRERELEASE_SUFFIX=
+  - set PACKAGE_PRERELEASE_SUFFIX=rtm
 
 build_script:
 - build-appveyor.cmd
