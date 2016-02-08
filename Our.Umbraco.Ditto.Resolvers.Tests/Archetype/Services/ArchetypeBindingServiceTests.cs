@@ -79,7 +79,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Tests.Archetype.Services
 
             var resolveValue = _sut.As(_archetype, _propertyDescriptor.PropertyType, _culture, _content, _context);
             
-            Assert.AreEqual(resolveValue, null);
+            Assert.IsNotNull(resolveValue);
         }
 
         [Test]

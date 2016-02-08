@@ -64,17 +64,7 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Resolvers
 
                 var archetype = property != null && property.HasValue ? property.Value as ArchetypeModel : null;
 
-                if (archetype != null)
-                {
-                    return _bindingService.As(archetype, descriptor.PropertyType, Culture, content, Context);
-                }
-                else
-                {
-                    if (property != null && property.HasValue)
-                    {
-                        throw new InvalidOperationException($"Property '{alias}' on {content.Name} ({content.Id} doesnt apear to be an Archetype");
-                    }
-                }
+                return _bindingService.As(archetype, descriptor.PropertyType, Culture, content, Context);
             }
 
             return null;

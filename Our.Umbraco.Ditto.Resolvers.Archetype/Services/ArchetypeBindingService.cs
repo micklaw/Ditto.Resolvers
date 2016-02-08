@@ -54,23 +54,23 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
         /// <returns></returns>
         private object GetTypedArchetype(ArchetypeModel archetype, Type entityType, CultureInfo culture = null, IPublishedContent content = null, DittoValueResolverContext context = null)
         {
+            // [ML] - Identify type
+
+            var isGenericList = entityType.IsGenericType && (entityType.GetGenericTypeDefinition() == typeof(IList<>) || entityType.GetGenericTypeDefinition() == typeof(List<>));
+            var propertyType = isGenericList ? entityType.GetGenericArguments().FirstOrDefault() : entityType;
+
+            if (propertyType == null)
+            {
+                throw new NullReferenceException($"The type ({entityType.Name}) can not be inferred?");
+            }
+
+            // [ML] - Build a generic list from the type found above
+
+            var constructedListType = typeof(List<>).MakeGenericType(propertyType);
+            var list = (IList)Activator.CreateInstance(constructedListType);
+
             if (archetype?.Fieldsets != null && archetype.Fieldsets.Any())
             {
-                // [ML] - Identify type
-
-                var isGenericList = entityType.IsGenericType && (entityType.GetGenericTypeDefinition() == typeof(IList<>) || entityType.GetGenericTypeDefinition() == typeof(List<>));
-                var propertyType = isGenericList ? entityType.GetGenericArguments().FirstOrDefault() : entityType;
-
-                if (propertyType == null)
-                {
-                    throw new NullReferenceException($"The type ({entityType.Name}) can not be inferred?");
-                }
-
-                // [ML] - Build a generic list from the type found above
-
-                var constructedListType = typeof(List<>).MakeGenericType(propertyType);
-                var list = (IList)Activator.CreateInstance(constructedListType);
-
                 // [ML] - We have work to do, so if the service isnt populated get the default implementations
 
                 var service = _valueService ?? DependencyResolver.Current.GetService<DittoValueService>();
@@ -222,11 +222,9 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
                         }
                     }
                 }
-
-                return isGenericList ? list : null;
             }
 
-            return null;
+            return list;
         }
         
         /// <summary>
@@ -297,11 +295,6 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
             IPublishedContent content = null,
             DittoValueResolverContext context = null)
         {
-            if (archetype == null)
-            {
-                return null;
-            }
-
             return GetTypedArchetype(archetype, type, culture, content, context);
         }
     }
