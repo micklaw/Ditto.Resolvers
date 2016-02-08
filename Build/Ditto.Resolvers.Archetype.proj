@@ -30,7 +30,7 @@
   <!-- NUGET ONLY PROPERTIES -->
   <PropertyGroup>
     <PackageId>Ditto.Resolvers.Archetype</PackageId>
-    <Copyright>Copyright &#169; 2015 Michael Law Web Development Ltd</Copyright>
+    <Copyright>Copyright &#169; 2016 Michael Law Web Development Ltd</Copyright>
     <Owners>Michael Law Web Development Ltd</Owners>
     <IconUrl>https://upload.wikimedia.org/wikipedia/commons/6/6d/Beth_Ditto_IMG_5538.jpg</IconUrl>
     <Tags>umbraco poco mapping strongly-typed archetype</Tags>
