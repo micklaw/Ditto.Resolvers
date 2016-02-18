@@ -11,7 +11,7 @@ using Our.Umbraco.Ditto.Resolvers.Archetype.Models.Abstract;
 
 namespace Ditto.Resolvers.Sample.Models.Archetypes
 {
-    [ArchetypeContent(alias: "priceList")]
+    [ArchetypeContent("priceList")]
     public class PriceList : IWidget, IFieldset
     {
         public string Title { get; set; }

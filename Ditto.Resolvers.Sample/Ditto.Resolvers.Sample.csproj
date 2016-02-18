@@ -332,6 +332,7 @@
     <Compile Include="Models\Archetypes\Number.cs" />
     <Compile Include="Models\Archetypes\RichTextWithHeader.cs" />
     <Compile Include="Models\Archetypes\PriceList.cs" />
+    <Compile Include="Models\Archetypes\SameProperty.cs" />
     <Compile Include="Models\Custom\GabeHCould.cs" />
     <Compile Include="Models\Ditto\ValueResolvers\GabeHCoudResolvers.cs" />
     <Compile Include="Models\DocTypes\Base\Content.cs" />

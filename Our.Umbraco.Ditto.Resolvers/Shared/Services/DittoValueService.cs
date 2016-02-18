@@ -30,8 +30,6 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
 
             try
             {
-                // ML - If this is a non Archetype but has an archetype resolver attribute, then ignore it
-
                 object resolverValue = null;
 
                 var typedResolvedMethod = _getResolvedValue.Value;
@@ -43,7 +41,14 @@ namespace Our.Umbraco.Ditto.Resolvers.Shared.Services
                 var typedValueMethod = _getTypedValue.Value;
                 if (typedValueMethod != null)
                 {
-                    result = typedValueMethod.Invoke(this, new[] {content, culture, propertyInfo, resolverValue ?? propertyValue, instance});
+                    result = typedValueMethod.Invoke(this, new[] {content, culture, propertyInfo, propertyValue, instance});
+
+                    // ML - If the result of the TypEConverter is null, try it with the output of the Ditto resolver
+
+                    if (result == null)
+                    {
+                        result = typedValueMethod.Invoke(this, new[] { content, culture, propertyInfo, resolverValue, instance });
+                    }
                 }
             }
             catch (Exception exception)

@@ -26,5 +26,8 @@ namespace Ditto.Resolvers.Sample.Models.DocTypes
 
         [ArchetypeValueResolver]
         public List<IMulti> UnknownBadBoy { get; set; }
+
+        [ArchetypeValueResolver]
+        public SameProperty SameProperty { get; set; }
     }
 }
