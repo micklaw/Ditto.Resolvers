@@ -3,6 +3,8 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/w545oncssfcafldq?svg=true)](https://ci.appveyor.com/project/MichaelLaw/ditto-resolvers)
 [![NuGet release](https://img.shields.io/nuget/vpre/Ditto.Resolvers.Archetype.svg)](https://www.nuget.org/packages/Ditto.Resolvers.Archetype)
 
+**DISCLAIMER**: Just a note for anyone starting to use this on a new project or maintaining an old project and updating Ditto. As of Ditto **> 0.8.4**, this code will work, but will no longer be supported. Value resolvers and type converters are now replaced with processors, of which, there is a DittoFactoryProcessor which completes this task beautifully... so use that. Peace
+
 Ditto is awesome, we all know that, though it would be nice little collection of common resolvers and also more complex ones for third parties like Archetype or The 'notorious' Grid. This wee chunk of code is aiming to achieve just that.
 
 Currently this only has support for Archetypes, but hopefully over the next couple of weeks we can add to that.
