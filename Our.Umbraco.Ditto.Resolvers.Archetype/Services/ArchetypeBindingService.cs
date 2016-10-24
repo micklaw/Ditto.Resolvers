@@ -199,7 +199,10 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
                                         }
                                         else
                                         {
-                                            throw new InvalidOperationException($"Property '{alias}' on type '{instanceType.Name}' has an ArchetypeValueResolverAttribute but does the not appear to be an Archetype in the generated JSON.");
+                                            if (property?.Value != null)
+                                            {
+                                                throw new InvalidOperationException($"Property '{alias}' on type '{instanceType.Name}' has an ArchetypeValueResolverAttribute but does the not appear to be an Archetype in the generated JSON. It looks like a '{property.Value.GetType().FullName}'");
+                                            }
                                         }
                                     }
 
@@ -221,6 +224,18 @@ namespace Our.Umbraco.Ditto.Resolvers.Archetype.Services
                             }
                         }
                     }
+                }
+            }
+            else
+            {
+                if (!isGenericList)
+                {
+                    if (propertyType.IsValueType)
+                    {
+                        return Activator.CreateInstance(propertyType);
+                    }
+
+                    return null;
                 }
             }
 

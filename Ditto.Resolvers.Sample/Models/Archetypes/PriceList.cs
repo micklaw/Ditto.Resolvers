@@ -32,6 +32,9 @@ namespace Ditto.Resolvers.Sample.Models.Archetypes
 
         public string TestStringField { get; set; }
 
+        [ArchetypeValueResolver]
+        public SameProperty OptionalSameProperty { get; set; }
+
         IEnumerable<GabeHCoud> _persons { get; set; }
 
         [DittoValueResolver(typeof(GabeHCoudResolvers))]
